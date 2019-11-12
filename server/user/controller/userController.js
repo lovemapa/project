@@ -118,61 +118,66 @@ class userController {
     updateInvoice(id, data) {
 
         return new Promise((resolve, reject) => {
-            invoiceModel.findOneAndUpdate({ _id: id }, {
-                issuedate: data.issuedate,
-                duedate: data.duedate,
-                entries: {
-                    description: data.description,
-                    quantity: data.quantity,
-                    price: data.price,
-                    subtotal: data.subtotal
-                },
-                gst: data.gst,
-                name: data.name,
-                address: data.address,
-                mobile: data.mobile,
-                totalamount: data.totalamount,
-                gstnumber: data.gstnumber,
-                currency: data.currency
-            }).then((result) => {
-
-
-                let query = {}
-                var perPage = 8
-                var page = 1;
-                // var page = current || 1
-                if (!Number(data.isadmin)) {
-                    query.userId = data.currentUser
-                    query.status = 'draft'
-                }
-                else {
-                    query.$or = [{ status: 'draft' }, { status: 'final' }]
-                    query.userId = userId
-                }
-
-                invoiceModel.find(query).populate({ path: 'userId' }).sort({ "_id": -1 }).skip((perPage * page) - perPage).limit(perPage).then((result) => {
-                    invoiceModel.countDocuments().then((count) => {
-
-                        console.log('RESULT==', result);
-
-                        resolve({
-                            Invoices: result,
-                            current: page,
-                            pages: Math.ceil(count / perPage)
-                        })
+            var query;
+            if (data.final == 'final') {
+                query = 'final'
+            }
+            else
+                query = 'draft'
+            if (data)
+                invoiceModel.findOneAndUpdate({ _id: id }, {
+                    issuedate: data.issuedate,
+                    duedate: data.duedate,
+                    entries: {
+                        description: data.description,
+                        quantity: data.quantity,
+                        price: data.price,
+                        subtotal: data.subtotal
                     },
-                        (err) => {
-                            reject(err)
-                        })
-                }, (err) => {
-                    reject(err)
+                    gst: data.gst,
+                    name: data.name,
+                    address: data.address,
+                    mobile: data.mobile,
+                    totalamount: data.totalamount,
+                    gstnumber: data.gstnumber,
+                    currency: data.currency,
+                    status: query
+                }).then((result) => {
+
+
+                    let query = {}
+                    var perPage = 8
+                    var page = 1;
+                    // var page = current || 1
+                    if (!Number(data.isadmin)) {
+                        query.userId = data.currentUser
+                        query.status = 'draft'
+                    }
+                    else {
+                        query.$or = [{ status: 'draft' }, { status: 'final' }]
+                        // query.userId = userId
+                    }
+
+                    invoiceModel.find(query).populate({ path: 'userId' }).sort({ "_id": -1 }).skip((perPage * page) - perPage).limit(perPage).then((result) => {
+                        invoiceModel.countDocuments().then((count) => {
+                            resolve({
+                                Invoices: result,
+                                current: page,
+                                pages: Math.ceil(count / perPage)
+                            })
+                        },
+                            (err) => {
+                                reject(err)
+                            })
+                    }, (err) => {
+                        reject(err)
+                    })
+
+
+                }).catch(err => {
+                    console.log(err);
+
                 })
-
-
-            }).catch(err => {
-                console.log(err);
-
-            })
         })
     }
 
@@ -217,7 +222,7 @@ class userController {
         }
         else {
             query.$or = [{ status: 'draft' }, { status: 'final' }]
-            query.userId = userId
+            // query.userId = userId
         }
         console.log(query);
 
