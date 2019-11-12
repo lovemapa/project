@@ -1,0 +1,39 @@
+{
+  "name": "invoice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "daterangepicker": "^3.0.5",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "express-sessions": "^1.0.6",
+    "file-system": "^2.2.2",
+    "html-pdf": "^2.2.0",
+    "invoice-number": "^1.0.6",
+    "lightpick": "^1.4.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.6.4",
+    "mongoose-auto-increment": "^5.0.1",
+    "morgan": "^1.9.1",
+    "nodemailer": "^6.3.0",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "nodemon": "^1.19.4",
+    "number-to-words": "^1.2.4",
+    "phantom": "^6.3.0",
+    "phantom-html-to-pdf": "^0.6.0",
+    "requestify": "^0.2.5",
+    "sweetalert": "^2.1.2"
+  }
+}

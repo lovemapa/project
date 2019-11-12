@@ -1,0 +1,230 @@
+<style>
+  .with-nav-tabs.panel-default .nav-tabs>li>a,
+  .with-nav-tabs.panel-default .nav-tabs>li>a:hover,
+  .with-nav-tabs.panel-default .nav-tabs>li>a:focus {
+    color: #777;
+  }
+
+  .with-nav-tabs.panel-default .nav-tabs>.open>a,
+  .with-nav-tabs.panel-default .nav-tabs>.open>a:hover,
+  .with-nav-tabs.panel-default .nav-tabs>.open>a:focus,
+  .with-nav-tabs.panel-default .nav-tabs>li>a:hover,
+  .with-nav-tabs.panel-default .nav-tabs>li>a:focus {
+    color: #777;
+    background-color: #ddd;
+    border-color: transparent;
+  }
+
+  .with-nav-tabs.panel-default .nav-tabs>li.active>a,
+  .with-nav-tabs.panel-default .nav-tabs>li.active>a:hover,
+  .with-nav-tabs.panel-default .nav-tabs>li.active>a:focus {
+    color: #555;
+    background-color: #fff;
+    border-color: #ddd;
+    border-bottom-color: transparent;
+  }
+
+  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu {
+    background-color: #f5f5f5;
+    border-color: #ddd;
+  }
+
+  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>li>a {
+    color: #777;
+  }
+
+  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>li>a:hover,
+  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>li>a:focus {
+    background-color: #ddd;
+  }
+
+  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>.active>a,
+  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>.active>a:hover,
+  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>.active>a:focus {
+    color: #fff;
+    background-color: #555;
+  }
+</style>
+
+
+
+<script> localStorage.setItem("currentUser", "<%= userid%>") </script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css" />
+
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+
+<% include ../partials/head %>
+
+<body>
+  <!-- Sidenav -->
+  <% include ../partials/sidebar %>
+  <!-- Main content -->
+  <div class="main-content">
+    <!-- Top navbar -->
+    <% include ../partials/navbar %>
+    <!-- Header -->
+    <% include ../partials/header %>
+
+    <div class="container-fluid mt--7">
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row"
+                style="border: 2px solid lightgray;margin-left: -24px;padding-top: 15px; padding-bottom: 15px; margin-right: 5px;">
+                <div class="date-calender" id="reportrange" 
+                  style="background: #fff;margin-right: 35%; border: 1px solid lightgray;">
+                  <i class="fa fa-calendar"></i>
+                  <span><i class="fa fa-caret-down"></i></span>
+                </div>
+                <br>
+                <span style="float: right; margin-right: -100%;">
+                  <b>Current Balance :</b><%- Invoices.currency == "USD" ? "$":"₹" %><%= totalINR %> $<%= totalUSD %>
+                </span>
+              </div>
+              <br>
+              <br>
+              <div style="width: 100%;">
+                <div class="row">
+                  <div class="col-sm">
+                    <div class="card-body"
+                      style="border: 1px solid lightgray; width: 250px; height: 150px;margin-left: -24px;">
+                      <h5 class="card-title text-uppercase text-muted mb-0"></h5>
+                      <span class="h2 font-weight-bold mb-0">Payment Volume in $
+                        <%= totalUSD %></span><br>
+                      <span class="h2 font-weight-bold mb-0">Payment Volume in ₹ <%= totalINR %></span>
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div class="card-body"
+                      style="border: 1px solid lightgray; width: 250px; height: 150px; margin-left: 190px;">
+                      <h5 class="card-title text-uppercase text-muted mb-0"></h5>
+                      <span class="h2 font-weight-bold mb-0"> No. Of Payments<br>
+                        <%= Invoices.length %>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="row">
+                <table class="table align-items-center table-flush" >
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" style="color: #000;font-weight: 700;">Invoice Number</th>
+                      <th scope="col" style="color: #000;font-weight: 700;">User Name</th>
+                      <th scope="col" style="color: #000;font-weight: 700;">Issue Date</th>
+                      <th scope="col" style="color: #000;font-weight: 700;">Due Date</th>
+                      <th scope="col" style="color: #000;font-weight: 700;">Currency</th>
+                      <th scope="col" style="color: #000;font-weight: 700;">GST</th>
+                      <th scope="col" style="color: #000;font-weight: 700;">Total Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody style="border-bottom: 1px solid #ababab;">
+                    <% Invoices.forEach((invoice)=>{ %>
+
+                    <tr>
+                      <th scope="row">
+                        <%= invoice.invoiceno %>
+                      </th>
+                      <td>
+                        <%= invoice.userId.name %>
+                      </td>
+                      <td>
+                        <%= invoice.issuedate %>
+                      </td>
+                      <td>
+                        <%= invoice.duedate %>
+                      </td>
+                      <td>
+                        <%= invoice.currency %>
+                      </td>
+                      <td>
+                        <%- invoice.currency == "USD" ? "$":"₹" %><%= invoice.gst %>
+                      </td>
+                      <td>
+                        <%- invoice.currency == "USD" ? "$":"₹" %><%= invoice.totalamount %>
+                      </td>
+                    </tr>
+                    <%})%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.js"></script>
+<script>
+  $(document).ready(function () {
+    var urlLocation = location.href;
+    var startPosition = urlLocation.indexOf("?");
+    var query = '';
+    var test2 = '';
+    var test1 = '';
+    if (startPosition < 0) {
+       query = '';
+    } else {
+      query = urlLocation.slice(startPosition);
+      query = query.split('&');
+      if (query.length) {
+        test1 = query['0'].split('start=')[1];
+        test2 = query['1'].split('end=')[1];
+      }
+    }
+    
+
+    var start = test1 ? moment(test1, 'DD/MM/YYYY') : moment().subtract(29, 'days');
+    var end = test2 ? moment(test2, 'DD/MM/YYYY') : moment();
+    // console.log(moment());
+
+    function cb(start, end) {
+      $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+    }
+    $('#reportrange').daterangepicker({
+      startDate: start,
+      endDate: end,
+      ranges: {
+        'Today': [moment(), moment()],
+        'Past 7 Days': [moment().subtract(6, 'days'), moment()],
+        'Past 30 Days': [moment().subtract(29, 'days'), moment()],
+        'Past 90 Days': [moment().subtract(89, 'days'), moment()]
+      }
+
+    }, cb);
+    cb(start, end);
+  });
+  $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+    var url = addParameterToURL('http://localhost:2000/home', 'start', picker.startDate.format('DD/MM/YYYY'));
+    var windowUrl = addParameterToURL(url, 'end', picker.endDate.format('DD/MM/YYYY'));
+    window.location = windowUrl;
+    
+  });
+
+  function addParameterToURL(_url,_key,_value){
+         var param = _key+'='+escape(_value);
+         var sep = '&';
+         if (_url.indexOf('?') < 0) {
+           sep = '?';
+         } else {
+           var lastChar=_url.slice(-1);
+           if (lastChar == '&') sep='';
+           if (lastChar == '?') sep='';
+         }
+         
+         _url += sep + param;
+         return _url;
+     }
+</script>

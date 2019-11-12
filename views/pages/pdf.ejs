@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <title>Document</title>
+</head>
+
+<style>
+  .sec_table td,
+  .sec_table th,
+  table.sec_table {
+    border: solid 1px #d9d9d9 !important;
+  }
+
+  .main_table td,
+  .main_table th,
+  table.main_table {
+    border: solid 1px #d9d9d9 !important;
+    vertical-align: top;
+  }
+
+
+  .table.sec_table>tbody>tr>td,
+  .table.sec_table>tbody>tr>th,
+  .table.sec_table>tfoot>tr>td,
+  .table.sec_table>tfoot>tr>th,
+  .table.sec_table>thead>tr>td,
+  .table.sec_table>thead>tr>th {
+    border-top: solid 1px #d9d9d9 !important;
+  }
+
+  table td,
+  table th,
+  table tr {
+    border: solid 1px #ffffff !important;
+  }
+
+  body {
+    margin: 0;
+    background: #fff !important;
+  }
+
+  h1,
+  .h2,
+  .h3,
+  h1,
+  h2,
+  h3 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .sec_main {
+    background: #fff;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 0 20px 1px #0000002b;
+    margin-top: 3rem;
+    margin: auto;
+  }
+
+  .dashboard {
+    margin: 90px 0;
+  }
+
+  button {
+    margin: 20px 10px;
+    border: none;
+    padding: 8px 40px;
+    background: #000;
+    color: #fff !important;
+  }
+
+  .back_btn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: auto;
+  }
+
+  button a {
+    color: #fff;
+  }
+
+  div#toggleInvoice ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0px;
+    margin-top: 2rem;
+  }
+
+  div#toggleInvoice ul li {
+    width: 49%;
+    margin-bottom: 2rem;
+  }
+
+  .slector_list {
+    width: 100%;
+    padding: 5px 10px;
+  }
+
+  .col-sm-offset-2.col-sm-10.sub_btn button {
+    background: #000;
+    color: #fff;
+    border: unset;
+    padding: 5px 10px;
+  }
+
+  .conta_iner {
+    width: 1200px;
+    margin: 0px auto;
+    padding: 6rem 0px;
+  }
+
+  .gst_num_main {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .gst_number_box {
+    width: 70%;
+    height: 147px;
+    padding: 17px;
+  }
+
+  .table_main {
+    width: 28% !important;
+  }
+
+  table th,
+  table td {
+    font-size: 14px;
+    padding: 1px 7px;
+  }
+
+  table.sec_table {
+    margin-top: 3rem;
+    border: solid 1px #d9d9d9 !important;
+  }
+
+  h3 {
+    font-size: 30px;
+    width: 948px;
+    margin: 30px auto;
+  }
+
+  table.third_table {
+    width: 100% !important;
+    float: right;
+  }
+
+  table.forth_table {
+    width: 100% !important;
+    float: right;
+    margin-top: 25px;
+  }
+
+  .download_btn button {
+    background: #000;
+    color: #fff;
+    font-size: 16px;
+    margin: 20px 0 0;
+  }
+
+  .cont_main h1 {
+    font-size: 27px;
+    font-weight: 600;
+  }
+
+  .cont_main h3 {
+    font-size: 21px;
+    font-weight: 500;
+    padding: 1rem 0px;
+  }
+
+  a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .text {
+    padding-block-start: 50px;
+  }
+
+  .text1 {
+    padding-block-start: 10px;
+  }
+
+  .main_table {
+    width: 100%;
+  }
+
+  .nullHeading:first-child {
+    border-left: solid 1px #d9d9d9 !important;
+  }
+
+  .nullHeading {
+    width: 8% !important;
+    border-left: unset !important;
+    border-right: unset !important;
+  }
+
+  table.table.gst_amount td,
+  table.table.gst_amount th {
+    border: unset !important;
+  }
+
+  table.table.gst_amount td table.third_table.table1 th,
+  table.table.gst_amount td table.third_table.tablel td,
+  table.table.gst_amount td table.third_table.tablel tr {
+    border: solid 1px #ddd !important;
+  }
+
+  table.table.gst_amount td table.forth_table.table2 th,
+  table.table.gst_amount td table.forth_table.table2 td,
+  table.table.gst_amount td table.forth_table.table2 tr {
+    border: solid 1px #ddd !important;
+  }
+
+  table.table.gst_amount td:last-child {
+    width: 40%;
+  }
+
+  table.table.gst_amount td table.third_table.table1 td {
+    border: solid 1px #ddd !important;
+  }
+
+  #toggleInvoiceTable {
+    padding-right: 10px;
+  }
+</style>
+
+<body>
+
+  <div class="conta_iner">
+    <div class="sec_main">
+      <div>
+        <a class="sticky_logo" style="padding-left: 40%;">
+          <img src="/img/brand/new-logo.png" class="navbar-brand-img" alt="...">
+        </a>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="gst_num_main">
+        <table class="main_table">
+          <tr>
+            <td class="gst_number_box">
+
+              <p><b>Bill to :</b><%= invoiceno %></p>
+              <p><%= Invoices.name %> </p>
+              <p><%= Invoices.mobile %></p>
+              <p><%= Invoices.address %></p>
+              <% if(Invoices.gstnumber){ %>
+              <p><b>GST No. :</b><%= Invoices.gstnumber %></p>
+              <% } %>
+            </td>
+            <td style="border: solid 1px #ffffff !important;padding: 5px 5px 0 30px;">
+              <table class="table" style="margin-bottom:10px;">
+                <thead>
+                  <tr>
+                    <th style="padding: 15px 10px;" scope="col">Invoice Number</th>
+                    <td style="padding: 15px 10px;"><%= invoiceno %></td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Issue Date</th>
+                    <td><%= Invoices.issuedate %></td>
+
+                  </tr>
+                  <tr>
+                    <th scope="col">Due Date</th>
+                    <td><%= Invoices.duedate %></td>
+                  </tr>
+
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="toggleInvoiceTable" style="padding-right: 10px;">
+        <table class="table sec_table">
+          <thead>
+            <tr>
+              <th scope="col">Sr.No</th>
+              <th scope="col">Description</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Price</th>
+              <th scope="col">Subtotal</th>
+            </tr>
+
+            <% Invoices.entries.forEach((comon,i)=>{ %>
+            <tr>
+              <td><%= i+1 %></td>
+
+              <td><%= comon.description %></td>
+              <td><%= comon.quantity %></td>
+              <td><%=Invoices.currency=="INR"?"₹":"$"%><%= comon.price%> </td>
+              <td><%=Invoices.currency=="INR"?"₹":"$"%><%= comon.subtotal %></td>
+            </tr>
+            <%})%>
+          </thead>
+          <tbody id="tbody2">
+          </tbody>
+        </table>
+      </div>
+      <table class="table gst_amount">
+
+        <tr>
+          <td><span style="margin-top: 5px;">For Apptunix: <b><%= Invoices.words %> only</b></span></td>
+          <td>
+            <table class="third_table table1" style="float: right;">
+              <thead>
+                <tr>
+                  <th scope="col">GST<%=Invoices.currency=="INR"?"(18%)":""%></th>
+                  <td><%=Invoices.currency=="INR"?"₹":"$"%><%= Invoices.gst %></td>
+                </tr>
+                <tr>
+                  <th scope="col">Total Amount</th>
+                  <td><%=Invoices.currency=="INR"?"₹":"$"%><%= Invoices.totalamount %></td>
+                </tr>
+              </thead>
+              <tbody id="tbody3">
+              </tbody>
+            </table>
+            <table class="forth_table table2">
+              <thead>
+                <tr>
+                  <th scope="col">PAN Number:</th>
+                  <th>BEOPB0508R</th>
+                </tr>
+                <tr>
+                  <th scope="col">GST Number:</th>
+                  <th>03BEOPB0508RIZH</th>
+                </tr>
+              </thead>
+            </table>
+          </td>
+        </tr>
+
+      </table>
+      <div class="text1">
+        Payment by direct transfer is preferred and remittance shall be made to: Apptunix<br>
+        Account Number: 5020001181999, HDFC Bank, Mohali Branch, S.C.F. 19,Phase 7, SAS Nagar, Mohali, Distt-Ropar
+        Mohali -160061.PUNJAB.<br>
+        SWIFT Code: HDFCINBB IFSC Code: HDFC0000056
+        <br>
+      </div>
+
+      <div class="text">
+        <div>
+          All disputes subject to Mohali jurisdiction
+          <br>
+          <br>
+          <b> Kindly send us back the Invoice copy duly Signed and with company Seal.</b><br><br>
+          Receiver Name:
+          <br>
+          Reciever Signature:
+          <br>
+          Department:
+          <br>
+          Received Date:
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <!-- <div class="row">
+      <tr>
+        <a href="/dashboard"> <div class="back_btn"> <button>Back</button> </div></a>
+        <a href="/invoice/pdf/<%= Invoices._id %>" download><div class="download_btn"><button>Download</button></div></a>
+      </tr>
+    </div> -->
+  <!-- </div> -->
+
+
+</body>
+
+</html>

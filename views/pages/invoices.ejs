@@ -1,0 +1,225 @@
+<style>
+  .cont_iner {
+    width: 98%;
+    margin: 0px auto;
+    padding: 3rem 0px;
+  }
+
+  .top_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .top_btn button {
+    background: unset;
+    border: none;
+    padding: 8px 10px;
+    color: #fff !important;
+  }
+
+  .top_btn button a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .top_btn {
+    margin-bottom: 0;
+    padding-bottom: 120px;
+  }
+
+  .table {
+    max-width: 100%;
+  }
+
+  td button {
+    border: none;
+    color: #fff !important;
+    outline: none;
+  }
+
+  a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  table.table th,
+  td {
+    border: 1px solid lightgray;
+  }
+
+  .table>caption+thead>tr:first-child>td,
+  .table>caption+thead>tr:first-child>th,
+  .table>colgroup+thead>tr:first-child>td,
+  .table>colgroup+thead>tr:first-child>th,
+  .table>thead:first-child>tr:first-child>td,
+  .table>thead:first-child>tr:first-child>th {
+    border-top: 1px solid lightgray !important;
+  }
+
+  .pagination>.active>a,
+  .pagination>.active>a:focus,
+  .pagination>.active>a:hover,
+  .pagination>.active>span,
+  .pagination>.active>span:focus,
+  .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff !important;
+    cursor: default;
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+  }
+
+  .pagination {
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin: 40px 0 30px;
+  }
+
+  .pagination>li>a,
+  .pagination>li>span {
+    color: #000 !important;
+  }
+
+  .h1,
+  .h2,
+  .h3,
+  h1,
+  h2,
+  h3 {
+    margin-top: 100px;
+    margin-bottom: 0px;
+    margin-left: 50px;
+  }
+
+  .pagination {
+    display: inline-block;
+  }
+
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 4px 10px;
+    text-decoration: none;
+  }
+</style>
+<script> localStorage.setItem("currentUser", "<%= userid%>") </script>
+<% include ../partials/head %>
+
+<body>
+  <!-- Sidenav -->
+  <% include ../partials/sidebar %>
+  <!-- Main content -->
+  <div class="main-content">
+    <!-- Top navbar -->
+    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+      <div class="container-fluid">
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/invoices"><b>INVOICES</b></a>
+      </div>
+    </nav>
+    <!-- Header -->
+    <% include ../partials/header %>
+    <div class="container-fluid mt--7">
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" style="color: #000;font-weight: 700;">Invoice Number</th>
+                    <th scope="col" style="color: #000;font-weight: 700;"> User Name</th>
+                    <th scope="col" style="color: #000;font-weight: 700;">Issue Date</th>
+                    <th scope="col" style="color: #000;font-weight: 700;">Due Date</th>
+                    <th scope="col" style="color: #000;font-weight: 700;">Currency</th>
+                    <th scope="col" style="color: #000;font-weight: 700;">GST</th>
+                    <th scope="col" style="color: #000;font-weight: 700;">Total Amount</th>
+                    <th scope="col" style="color: #000;font-weight: 700;">Action</th>
+                    <th scope="col" style="color: #000;font-weight: 700;">Edit</th>
+                    <th scope="col" style="color: #000;font-weight: 700;">Status</th>
+                  </tr>
+                </thead>
+                <tbody style="border-bottom: 1px solid #ababab;">
+                  <% Invoices.forEach((invoice)=>{ %>
+                  <tr>
+                    <th scope="row">
+                      <%= invoice.invoiceno %>
+                    </th>
+                    <td>
+                      <%= invoice.userId.name %>
+                    </td>
+                    <td>
+                      <%= invoice.issuedate %>
+                    </td>
+                    <td>
+                      <%= invoice.duedate %>
+                    </td>
+                    <td>
+                      <%= invoice.currency %>
+                    </td>
+                    <td>
+                      <%- invoice.currency == "USD" ? "$":"₹" %><%= invoice.gst %>
+                    </td>
+                    <td>
+                      <%- invoice.currency == "USD" ? "$":"₹" %><%= invoice.totalamount %>
+                    </td>
+                    <td>
+                      <a href="/invoice/detail/<%= invoice._id %>"><i class="btn btn-primary fa fa-eye"
+                          style="padding: 4px;"></i></a>
+                      <a href="/invoice/delete/<%= invoice._id %>" onclick="alert('Are you sure ?');"><i type="button"
+                          class="btn btn-danger fa fa-trash" style="padding: 4px;"></i></a>
+                    </td>
+                    <td>
+                      <a href="/invoice/edit/<%= invoice._id %>"><i class="btn btn-primary fa fa-edit"
+                          style="padding: 4px;"></i></a>
+                    </td>
+                    <td>
+                      <%= invoice.status %>
+                    </td>
+                  </tr>
+                  <%})%>
+                </tbody>
+              </table>
+              <% if (pages > 0) { %>
+              <ul class="pagination text-center">
+                <% if (current == 1) { %>
+                <li class="disabled"><a>First</a></li>
+                <% } else { %>
+                <li><a href="/invoices">First</a></li>
+                <% } %>
+                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                <li class="disabled"><a>...</a></li>
+                <% } %>
+                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                <% if (i == current) { %>
+                <li class="active"><a><%= i %></a></li>
+                <% } else { %>
+                <li><a href="/invoices/<%= i %>"><%= i %></a></li>
+                <% } %>
+                <% if (i == Number(current) + 4 && i < pages) { %>
+                <li class="disabled"><a>...</a></li>
+                <% } %>
+                <% } %>
+                <% if (current == pages) { %>
+                <li class="disabled"><a>Last</a></li>
+                <% } else { %>
+                <li><a href="/invoices/<%= pages %>">Last</a></li>
+                <% } %>
+              </ul>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <% include ../partials/footer %>
+  </div>
+  </div>
+  <!-- Include scripts -->
+  <% include ../partials/scripts %>
+</body>
