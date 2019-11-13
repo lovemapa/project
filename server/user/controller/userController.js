@@ -155,8 +155,9 @@ class userController {
                     }
                     else {
                         query.$or = [{ status: 'draft' }, { status: 'final' }]
-                        // query.userId = userId
+                        query.userId = data.currentUser
                     }
+
 
                     invoiceModel.find(query).populate({ path: 'userId' }).sort({ "_id": -1 }).skip((perPage * page) - perPage).limit(perPage).then((result) => {
                         invoiceModel.countDocuments().then((count) => {
@@ -222,7 +223,7 @@ class userController {
         }
         else {
             query.$or = [{ status: 'draft' }, { status: 'final' }]
-            // query.userId = userId
+            query.userId = userId
         }
         console.log(query);
 
