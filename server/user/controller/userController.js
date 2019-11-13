@@ -210,8 +210,9 @@ class userController {
         else { query.status = 'final' }
         var data1 = '';
         if (typeof start !== 'undefined' && start !== 'NaN' && Number.isInteger(start)) {
-            query = {
-                createdAt: { $gte: Number(start) }
+            {
+                query.createdAt = { $gte: Number(start) }
+                query.status = 'final'
             }
         }
 
