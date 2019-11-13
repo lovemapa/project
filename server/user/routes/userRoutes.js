@@ -220,6 +220,8 @@ router.post('/resetpassword', auth, (undefinedreq, res) => {
 
 
 router.post('/createinvoice', auth, (req, res) => {
+    console.log(req.body);
+
     userController.createinvoice(req.body, req.session.currentUser).then((result) => {
         res.redirect('/invoices')
     }, (err) => {

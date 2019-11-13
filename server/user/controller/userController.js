@@ -59,9 +59,15 @@ class userController {
         })
     }
     createinvoice(body, userid) {
-        console.log('create invoice', (body.entries));
+
 
         return new Promise((resolve, reject) => {
+            var query;
+            if (body.final == 'final') {
+                query = 'final'
+            }
+            else
+                query = 'draft'
             invoiceModel.countDocuments().then((count) => {
                 count = count + 1
                 let invoiceno = "MO/" + "19-20/688/" + count;
@@ -78,6 +84,7 @@ class userController {
                     gstnumber: body.gstnumber,
                     userId: userid,
                     currency: body.currency,
+                    status: query,
                     createdAt: moment().valueOf()
                 })
                 invoice.save((err, result) => {
@@ -183,6 +190,8 @@ class userController {
     }
 
     getInvoicesData(userId, isadmin, current, start, end) {
+        console.log(userId, isadmin, current, start, end);
+
         let query = {}
         if (!isadmin) {
             query = { userId }
