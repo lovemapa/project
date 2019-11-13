@@ -209,12 +209,28 @@ class userController {
         }
         else { query.status = 'final' }
         var data1 = '';
-        if (typeof start !== 'undefined' && start !== 'NaN' && Number.isInteger(start)) {
+
+        if (
+
+            typeof end !== 'undefined' && end !== 'NaN' && Number.isInteger(end) &&
+
+            typeof start !== 'undefined' && start !== 'NaN' && Number.isInteger(start)) {
             {
-                query.createdAt = { $gte: Number(start) }
-                query.status = 'final'
+
+                if (start == end) {
+                    query.createdAt = { $gte: Number(start), $lte: Number(end + 86400000) }
+                    query.status = 'final'
+                }
+
+                else {
+
+                    query.createdAt = { $gte: Number(start), $lte: Number(end) }
+                    query.status = 'final'
+                }
             }
         }
+
+
 
         console.log('query', query);
         return new Promise((resolve, reject) => {

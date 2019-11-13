@@ -335,6 +335,8 @@ router.get('/users/edit/:userid', auth, (req, res) => {
 
 
 router.get('/invoice/delete/:invoiceid', auth, (req, res) => {
+    console.log('invoice==', req.params.invoiceid);
+
     userController.removeInvoice(req.params.invoiceid).then((data) => {
         res.redirect('/invoices')
     }, (err) => {

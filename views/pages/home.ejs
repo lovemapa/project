@@ -78,7 +78,7 @@
             <div class="card-header border-0">
               <div class="row"
                 style="border: 2px solid lightgray;margin-left: -24px;padding-top: 15px; padding-bottom: 15px; margin-right: 5px;">
-                <div class="date-calender" id="reportrange" 
+                <div class="date-calender" id="reportrange"
                   style="background: #fff;margin-right: 35%; border: 1px solid lightgray;">
                   <i class="fa fa-calendar"></i>
                   <span><i class="fa fa-caret-down"></i></span>
@@ -115,7 +115,7 @@
             </div>
             <div class="container">
               <div class="row">
-                <table class="table align-items-center table-flush" >
+                <table class="table align-items-center table-flush">
                   <thead class="thead-light">
                     <tr>
                       <th scope="col" style="color: #000;font-weight: 700;">Invoice Number</th>
@@ -175,7 +175,7 @@
     var test2 = '';
     var test1 = '';
     if (startPosition < 0) {
-       query = '';
+      query = '';
     } else {
       query = urlLocation.slice(startPosition);
       query = query.split('&');
@@ -184,9 +184,9 @@
         test2 = query['1'].split('end=')[1];
       }
     }
-    
 
-    var start = test1 ? moment(test1, 'DD/MM/YYYY') : moment().subtract(29, 'days');
+
+    var start = test1 ? moment(test1, 'DD/MM/YYYY') : moment().subtract(1, 'days');
     var end = test2 ? moment(test2, 'DD/MM/YYYY') : moment();
     // console.log(moment());
 
@@ -206,25 +206,25 @@
     }, cb);
     cb(start, end);
   });
-  $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+  $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
     var url = addParameterToURL('http://localhost:2000/home', 'start', picker.startDate.format('DD/MM/YYYY'));
     var windowUrl = addParameterToURL(url, 'end', picker.endDate.format('DD/MM/YYYY'));
     window.location = windowUrl;
-    
+
   });
 
-  function addParameterToURL(_url,_key,_value){
-         var param = _key+'='+escape(_value);
-         var sep = '&';
-         if (_url.indexOf('?') < 0) {
-           sep = '?';
-         } else {
-           var lastChar=_url.slice(-1);
-           if (lastChar == '&') sep='';
-           if (lastChar == '?') sep='';
-         }
-         
-         _url += sep + param;
-         return _url;
-     }
+  function addParameterToURL(_url, _key, _value) {
+    var param = _key + '=' + escape(_value);
+    var sep = '&';
+    if (_url.indexOf('?') < 0) {
+      sep = '?';
+    } else {
+      var lastChar = _url.slice(-1);
+      if (lastChar == '&') sep = '';
+      if (lastChar == '?') sep = '';
+    }
+
+    _url += sep + param;
+    return _url;
+  }
 </script>
