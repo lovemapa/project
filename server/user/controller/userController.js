@@ -204,15 +204,18 @@ class userController {
 
         let query = {}
         if (!isadmin) {
-            query = { userId }
+            query.userId = userId
+            query.status = 'final'
         }
+        else { query.status = 'final' }
         var data1 = '';
         if (typeof start !== 'undefined' && start !== 'NaN' && Number.isInteger(start)) {
             query = {
                 createdAt: { $gte: Number(start) }
             }
         }
-        console.log(query);
+
+        console.log('query', query);
         return new Promise((resolve, reject) => {
             invoiceModel.find(query).populate('userId').then((result) => {
                 resolve({
