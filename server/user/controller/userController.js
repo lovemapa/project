@@ -161,9 +161,19 @@ class userController {
                         query.status = 'draft'
                     }
                     else {
-                        query.$or = [{ status: 'draft' }, { status: 'final' }]
-                        query.userId = data.currentUser
+
+                        query.$or =
+                            [
+                                {
+                                    $and: [
+                                        { userId: data.currentUser },
+                                        { status: 'draft' }
+                                    ]
+                                },
+                                { status: 'final' }
+                            ]
                     }
+                    console.log(query);
 
 
                     invoiceModel.find(query).populate({ path: 'userId' }).sort({ "_id": -1 }).skip((perPage * page) - perPage).limit(perPage).then((result) => {
@@ -231,8 +241,18 @@ class userController {
             query.status = 'draft'
         }
         else {
-            query.$or = [{ status: 'draft' }, { status: 'final' }]
-            query.userId = userId
+            // query.$or = [{ status: 'draft' }, { userId: userId }, { status: 'final' }]
+            // query.status = "final"
+            query.$or =
+                [
+                    {
+                        $and: [
+                            { userId: userId },
+                            { status: 'draft' }
+                        ]
+                    },
+                    { status: 'final' }
+                ]
         }
         console.log(query);
 
