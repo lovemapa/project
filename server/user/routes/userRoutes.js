@@ -167,7 +167,10 @@ router.get('/invoices/:page?', auth, (req, res) => {
 })
 
 
-router.post('/resetpassword', auth, (undefinedreq, res) => {
+router.post('/reset-password', auth, (req, res) => {
+
+
+
     userModel.findOne({ _id: req.body.userId }, (err, user) => {
         if (err) {
             console.log('err', err)
@@ -185,10 +188,16 @@ router.post('/resetpassword', auth, (undefinedreq, res) => {
                             isadmin: req.session.isAdmin,
                             err4: "old password and new password are same"
                         }
-                        res.render('pages/reset-password', form3)
+                        res.render('pages/reset-password', { message: form3.err4, _id: form3._id, userid: form3.userid, isadmin: form3.isadmin })
                     }
                     else {
-                        res.render('pages/reset-password', req.flash('message', 'Password successfully updated!'))
+                        let form3 = {
+                            _id: req.body.userId,
+                            userid: req.session.currentUser,
+                            isadmin: req.session.isAdmin,
+                            err4: "Password changes successfully"
+                        }
+                        res.render('pages/reset-password', { message: form3.err4, _id: form3._id, userid: form3.userid, isadmin: form3.isadmin })
                     }
                 })
             }
