@@ -267,7 +267,7 @@ router.get('/invoice/edit/:invoiceid', auth, (req, res) => {
 });
 
 router.post('/invoice/edit/', auth, (req, res) => {
-    console.log('here', req.body);
+
 
     userController.updateInvoice(req.body._id, req.body).then(result => {
         result.isadmin = req.session.isAdmin

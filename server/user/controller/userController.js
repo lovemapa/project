@@ -158,7 +158,9 @@ class userController {
                     // var page = current || 1
                     if (!Number(data.isadmin)) {
                         query.userId = data.currentUser
-                        query.status = 'draft'
+                        query.$or = [
+                            { status: "draft" }, { status: "final" }
+                        ]
                     }
                     else {
 
@@ -173,7 +175,7 @@ class userController {
                                 { status: 'final' }
                             ]
                     }
-                    console.log(query);
+
 
 
                     invoiceModel.find(query).populate({ path: 'userId' }).sort({ "_id": -1 }).skip((perPage * page) - perPage).limit(perPage).then((result) => {
@@ -258,7 +260,9 @@ class userController {
         var page = current || 1
         if (!isadmin) {
             query.userId = userId
-            query.status = 'draft'
+            query.$or = [
+                { status: "draft" }, { status: "final" }
+            ]
         }
         else {
             // query.$or = [{ status: 'draft' }, { userId: userId }, { status: 'final' }]
@@ -274,7 +278,7 @@ class userController {
                     { status: 'final' }
                 ]
         }
-        console.log(query);
+
 
         return new Promise((resolve, reject) => {
             invoiceModel.find(query).populate({ path: 'userId' }).sort({ "_id": -1 }).skip((perPage * page) - perPage).limit(perPage).then((result) => {
