@@ -21,13 +21,11 @@ class userController {
             })
             user.save((err, result) => {
 
-                console.log('is admin', isadmin);
                 if (!isadmin)
                     reject({ code: 2 })
-
-                if (err.code === 11000) {
+                if (err)
                     reject({ code: 1 })
-                }
+
                 else {
                     result.password = body.password
                     resolve(result)
@@ -131,7 +129,7 @@ class userController {
 
         return new Promise((resolve, reject) => {
             var query;
-            if (data.final == 'final') {
+            if (data.final == 'final' || data.submitValue == 'final') {
                 query = 'final'
             }
             else
