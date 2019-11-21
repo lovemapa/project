@@ -97,7 +97,9 @@ router.post('/addUser', (req, res) => {
         }
         res.render('pages/register', sample)
     } else {
-        userController.register(req.body).then((result) => {
+
+
+        userController.register(req.body, req.session.isAdmin).then((result) => {
             mailer.setApiKey('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');
             const emailbody = req.body.email;
             const passbody = req.body.password;
@@ -110,13 +112,23 @@ router.post('/addUser', (req, res) => {
             mailer.send(message1);
             res.redirect('/users')
         }, (err) => {
+
             let sample1 = {
-                err5: 'email is already exist',
+
                 name: req.body.name,
                 email: req.body.email,
                 userid: req.session.currentUser,
                 isadmin: req.session.isAdmin
             }
+            if (err.code === 1) {
+                sample1.err5 = 'email is already exist'
+            }
+            if (err.code === 2) {
+                sample1.err5 = 'Only admin Can add User'
+            }
+
+            console.log(sample1);
+
             res.render('pages/register', sample1)
         })
     }

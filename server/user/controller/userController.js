@@ -8,7 +8,8 @@ const moment = require('moment');
 const sgTransport = require('nodemailer-sendgrid-transport')
 var converter = require('number-to-words');
 class userController {
-    register(body) {
+    register(body, isadmin) {
+
         return new Promise((resolve, reject) => {
             var salt = bcrypt.genSaltSync(4)
             var hash = bcrypt.hashSync(body.password, salt)
@@ -19,9 +20,13 @@ class userController {
                 password: hash,
             })
             user.save((err, result) => {
-                if (err) {
-                    console.log('error', err)
-                    reject(err)
+
+                console.log('is admin', isadmin);
+                if (!isadmin)
+                    reject({ code: 2 })
+
+                if (err.code === 11000) {
+                    reject({ code: 1 })
                 }
                 else {
                     result.password = body.password
