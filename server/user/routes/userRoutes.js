@@ -98,7 +98,9 @@ router.post('/addUser', (req, res) => {
         }
         res.render('pages/register', sample)
     } else {
-        userController.register(req.body).then((result) => {
+        userController.register(req.body, req.session.isAdmin).then((result) => {
+
+
             mailer.setApiKey('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');
             const emailbody = req.body.email;
             const passbody = req.body.password;
@@ -108,9 +110,9 @@ router.post('/addUser', (req, res) => {
                 subject: 'Registration Successfully',
                 text: 'You can Access Accoount in this credentials:-' + emailbody + ' ' + 'Password:-' + passbody,
             };
-            console.log(message1,"message",result);
+
             mailer.send(message1)
-            
+
             res.redirect('/users')
         }, (err) => {
 
@@ -127,10 +129,11 @@ router.post('/addUser', (req, res) => {
             if (err.code === 2) {
                 sample1.err5 = 'Only admin Can add User'
             }
-
-            console.log(sample1);
-
             res.render('pages/register', sample1)
+
+        }).catch(err => {
+            console.log('OUTSIDE err', err);
+
         })
     }
 })
@@ -231,8 +234,8 @@ router.post('/resetpassword', auth, (req, res) => {
             }
         }
     })
- })
- 
+})
+
 
 router.post('/createinvoice', auth, (req, res) => {
     userController.createinvoice(req.body, req.session.currentUser).then((result) => {

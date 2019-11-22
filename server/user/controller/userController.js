@@ -19,18 +19,25 @@ class userController {
                 email: body.email,
                 password: hash,
             })
-            user.save((err, result) => {
+            if (!isadmin)
+                reject({ code: 2 })
+            else {
+                user.save({}).then(result => {
 
-                if (!isadmin)
-                    reject({ code: 2 })
-                if (err)
-                    reject({ code: 1 })
-
-                else {
                     result.password = body.password
                     resolve(result)
-                }
-            })
+
+                }).catch(err => {
+
+                    if (err) {
+                        reject({ code: 1 })
+                    }
+
+
+                })
+            }
+
+
         })
     }
     login(body) {
