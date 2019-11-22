@@ -74,10 +74,21 @@ class userController {
             invoiceModel.countDocuments().then((count) => {
                 count = count + 1
                 let invoiceno = "MO/" + "19-20/688/" + count;
+
+                let entries = []
+                for (var j = 0; j < body.price.length; j++) {
+                    entries.push({
+                        description: body.description[j],
+                        quantity: body.quantity[j],
+                        price: body.price[j],
+                        subtotal: body.subtotal[j]
+                    })
+                }
+
                 let invoice = new invoiceModel({
                     issuedate: body.issuedate,
                     duedate: body.duedate,
-                    entries: JSON.parse(body.entries || '{}'),
+                    entries: entries,
                     gst: body.gst,
                     name: body.name,
                     address: body.address,
@@ -90,9 +101,9 @@ class userController {
                     status: query,
                     createdAt: moment().valueOf()
                 })
+
                 invoice.save((err, result) => {
                     if (err) {
-                        console.log(err, '342');
                         reject(err)
                     }
                     else {
@@ -126,7 +137,6 @@ class userController {
     }
 
     updateInvoice(id, data) {
-
         return new Promise((resolve, reject) => {
             var query;
             if (data.final == 'final' || data.submitValue == 'final') {
@@ -134,16 +144,22 @@ class userController {
             }
             else
                 query = 'draft'
-            if (data)
+            if (data) {
+
+
+                let entries = []
+                for (var j = 0; j < data.price.length; j++) {
+                    entries.push({
+                        description: data.description[j],
+                        quantity: data.quantity[j],
+                        price: data.price[j],
+                        subtotal: data.subtotal[j]
+                    })
+                }
                 invoiceModel.findOneAndUpdate({ _id: id }, {
                     issuedate: data.issuedate,
                     duedate: data.duedate,
-                    entries: {
-                        description: data.description,
-                        quantity: data.quantity,
-                        price: data.price,
-                        subtotal: data.subtotal
-                    },
+                    entries: entries,
                     gst: data.gst,
                     name: data.name,
                     address: data.address,
@@ -153,7 +169,6 @@ class userController {
                     currency: data.currency,
                     status: query
                 }).then((result) => {
-
 
                     let query = {}
                     var perPage = 8
@@ -179,8 +194,6 @@ class userController {
                             ]
                     }
 
-
-
                     invoiceModel.find(query).populate({ path: 'userId' }).sort({ "_id": -1 }).skip((perPage * page) - perPage).limit(perPage).then((result) => {
                         invoiceModel.countDocuments().then((count) => {
                             resolve({
@@ -201,12 +214,11 @@ class userController {
                     console.log(err);
 
                 })
+            }
         })
     }
 
     getInvoicesData(userId, isadmin, current, start, end) {
-        console.log(userId, isadmin, current, start, end);
-
         let query = {}
         if (!isadmin) {
             query.userId = userId
@@ -214,30 +226,20 @@ class userController {
         }
         else { query.status = 'final' }
         var data1 = '';
-
         if (
-
             typeof end !== 'undefined' && end !== 'NaN' && Number.isInteger(end) &&
-
             typeof start !== 'undefined' && start !== 'NaN' && Number.isInteger(start)) {
             {
-
                 if (start == end) {
                     query.createdAt = { $gte: Number(start), $lte: Number(end + 86400000) }
                     query.status = 'final'
                 }
-
                 else {
-
-                    query.createdAt = { $gte: Number(start), $lte: Number(end) }
+                    query.createdAt = { $gte: Number(start), $lte: Number(end + 86400000) }
                     query.status = 'final'
                 }
             }
         }
-
-
-
-        console.log('query', query);
         return new Promise((resolve, reject) => {
             invoiceModel.find(query).populate('userId').then((result) => {
                 resolve({
@@ -251,7 +253,6 @@ class userController {
             })
         })
     }
-
 
 
     // invoiceModel.find().then((result)=>{},(err)=>{})          //for future use
@@ -281,8 +282,6 @@ class userController {
                     { status: 'final' }
                 ]
         }
-
-
         return new Promise((resolve, reject) => {
             invoiceModel.find(query).populate({ path: 'userId' }).sort({ "_id": -1 }).skip((perPage * page) - perPage).limit(perPage).then((result) => {
                 invoiceModel.countDocuments().then((count) => {
@@ -301,6 +300,7 @@ class userController {
             })
         })
     }
+
 
     getUsers(current) {
         var perPage = 8
@@ -339,6 +339,7 @@ class userController {
         })
     }
 
+
     getuserProfile(userId) {
         return new Promise((resolve, reject) => {
             userModel.findById({ _id: userId }, (err, result) => {
@@ -351,6 +352,7 @@ class userController {
             })
         });
     }
+
 
     updateUser(data) {
         return new Promise((resolve, reject) => {
@@ -365,17 +367,16 @@ class userController {
         })
     }
 
+
     getProfile(_id) {
-
         return new Promise((resolve, reject) => {
-            console.log(_id);
-
-            userModel.find({ _id: _id }).then(result => {
+            userModel.findById(_id).then(result => {
                 resolve(result)
             })
         })
-
     }
+
+
     forgetPassword(email) {
         return new Promise((resolve, reject) => {
             userModel.findOne({ email: email }).then(user => {
@@ -396,7 +397,7 @@ class userController {
                         to: email,
                         subject: 'Change password :',
                         text: 'Click on confirmation link to change password',
-                        html: `<p style='font-size:17px'><a href='http://localhost:2000/forgetpassword/?token=${token}&user=${
+                        html: `<p style='font-size:17px'><a href='/forgetpassword/?token=${token}&user=${
                             user._id
                             }'>Click here to change your password</a></p>`,
                     },
@@ -404,7 +405,6 @@ class userController {
                         if (err) {
                             console.log(err)
                         } else {
-                            console.log('Message sent: ' + info.response)
                             userModel.findByIdAndUpdate(user._id, { token: token }).then(
                                 () => {
                                     resolve('Please check your email for confirmation link.')

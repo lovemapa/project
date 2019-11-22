@@ -12,6 +12,8 @@ const bcrypt = require('bcryptjs')
 const nodeMailer = require('nodemailer')
 const moment = require('moment');
 
+const hostUrl = 'http://localhost:2000';
+
 var ejs = require('ejs');
 let auth = ((req, res, next) => {
     if (req.session.currentUser) {
@@ -35,6 +37,7 @@ router.get('/', (req, res) => {
 router.get('/addUser', (req, res) => {
     res.render('pages/register', { userid: req.session.currentUser, isadmin: req.session.isAdmin })
 })
+
 
 router.get('/reset-password', auth, (req, res) => {
     userModel.findOne({ _id: req.query.userid }).then(result => {
@@ -84,8 +87,6 @@ router.get('/home', auth, (req, res) => {
 
 
 
-
-
 router.post('/addUser', (req, res) => {
     if (req.body.password != req.body.confirmpassword) {
         let sample = {
@@ -97,10 +98,8 @@ router.post('/addUser', (req, res) => {
         }
         res.render('pages/register', sample)
     } else {
-
-
-        userController.register(req.body, req.session.isAdmin).then((result) => {
-            mailer.setApiKey('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');
+        userController.register(req.body).then((result) => {
+            mailer.setApiKey('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');
             const emailbody = req.body.email;
             const passbody = req.body.password;
             const message1 = {
@@ -109,7 +108,9 @@ router.post('/addUser', (req, res) => {
                 subject: 'Registration Successfully',
                 text: 'You can Access Accoount in this credentials:-' + emailbody + ' ' + 'Password:-' + passbody,
             };
-            mailer.send(message1);
+            console.log(message1,"message",result);
+            mailer.send(message1)
+            
             res.redirect('/users')
         }, (err) => {
 
@@ -136,7 +137,6 @@ router.post('/addUser', (req, res) => {
 
 
 router.post('/login', (req, res) => {
-    console.log(req.body)
     if (req.session.currentUser) {
         res.redirect('/home')
     }
@@ -150,6 +150,7 @@ router.post('/login', (req, res) => {
         res.render('pages/login', { err: " Please enter valid email or password" })
     })
 })
+
 
 router.get('/logout', function (req, res, next) {
     if (req.session) {
@@ -168,7 +169,6 @@ router.get('/invoices/:page?', auth, (req, res) => {
     const currentUser = req.session.currentUser
 
     userController.getInvoices(currentUser, req.session.isAdmin, req.params.page).then((data) => {
-        // console.log('query',data.invoices)
         data.isadmin = req.session.isAdmin
         data.userid = req.session.currentUser
         res.render('pages/invoices', data)
@@ -179,10 +179,7 @@ router.get('/invoices/:page?', auth, (req, res) => {
 })
 
 
-router.post('/reset-password', auth, (req, res) => {
-
-
-
+router.post('/resetpassword', auth, (req, res) => {
     userModel.findOne({ _id: req.body.userId }, (err, user) => {
         if (err) {
             console.log('err', err)
@@ -190,26 +187,25 @@ router.post('/reset-password', auth, (req, res) => {
         else {
             if (bcrypt.compareSync(req.body.oldpassword, user.password) && req.body.newpassword == req.body.confirmpassword) {
                 var salt = bcrypt.genSaltSync(4)
-
                 var hash = bcrypt.hashSync(req.body.confirmpassword, salt)
                 userModel.findOneAndUpdate({ _id: req.body.userId }, { $set: { password: hash } }, (err, user) => {
                     if (req.body.oldpassword == req.body.newpassword) {
-                        let form3 = {
+                        let form2 = {
                             _id: req.body.userId,
                             userid: req.session.currentUser,
                             isadmin: req.session.isAdmin,
                             err4: "old password and new password are same"
                         }
-                        res.render('pages/reset-password', { message: form3.err4, _id: form3._id, userid: form3.userid, isadmin: form3.isadmin })
+                        res.render('pages/reset-password', { message: form2.err4, _id: form2._id, userid: form2.userid, isadmin: form2.isadmin })
                     }
                     else {
                         let form3 = {
                             _id: req.body.userId,
                             userid: req.session.currentUser,
                             isadmin: req.session.isAdmin,
-                            err4: "Password changes successfully"
+                            err5: "Successfully Changed"
                         }
-                        res.render('pages/reset-password', { message: form3.err4, _id: form3._id, userid: form3.userid, isadmin: form3.isadmin })
+                        res.render('pages/reset-password', form3)
                     }
                 })
             }
@@ -224,7 +220,6 @@ router.post('/reset-password', auth, (req, res) => {
                     res.render('pages/reset-password', form)
                 }
                 else {
-                    console.log('Error')
                     let form = {
                         _id: req.body.userId,
                         userid: req.session.currentUser,
@@ -234,21 +229,16 @@ router.post('/reset-password', auth, (req, res) => {
                     res.render('pages/reset-password', form)
                 }
             }
-
         }
     })
-})
-
+ })
+ 
 
 router.post('/createinvoice', auth, (req, res) => {
-    console.log(req.body);
-
     userController.createinvoice(req.body, req.session.currentUser).then((result) => {
         res.redirect('/invoices')
     }, (err) => {
-        console.log(err, '362163')
         res.send(err)
-
     })
 })
 
@@ -268,6 +258,7 @@ router.get('/createinvoice', auth, (req, res) => {
     })
 })
 
+
 router.get('/invoice/edit/:invoiceid', auth, (req, res) => {
     userController.getInvoiceById(req.params.invoiceid).then((data) => {
 
@@ -280,7 +271,6 @@ router.get('/invoice/edit/:invoiceid', auth, (req, res) => {
 
 router.post('/invoice/edit/', auth, (req, res) => {
 
-
     userController.updateInvoice(req.body._id, req.body).then(result => {
         result.isadmin = req.session.isAdmin
         result.userid = req.session.currentUser
@@ -289,8 +279,6 @@ router.post('/invoice/edit/', auth, (req, res) => {
         res.send(err)
     });
 });
-
-
 
 
 
@@ -334,13 +322,8 @@ router.post('/users/edit', auth, (req, res) => {
     })
 })
 router.get('/profile', auth, (req, res) => {
-
-
     userController.getProfile(req.session.currentUser).then(result => {
-
-
-
-        res.render('pages/profile', { title: 'profile', user: result.currentUser, _id: result.userid, email: result.email, name: result.name, role: result.role });
+        res.render('pages/profile', { result: result, isadmin: 1, userid: result._id });
     });
 });
 
@@ -356,8 +339,6 @@ router.get('/users/edit/:userid', auth, (req, res) => {
 
 
 router.get('/invoice/delete/:invoiceid', auth, (req, res) => {
-    console.log('invoice==', req.params.invoiceid);
-
     userController.removeInvoice(req.params.invoiceid).then((data) => {
         res.redirect('/invoices')
     }, (err) => {
@@ -391,7 +372,7 @@ router.get('/invoice/pdf/:invoiceid', (req, res) => {
     let nm = req.query.inv + '_' + n
     phantom.create().then(function (ph) {
         ph.createPage().then(function (page) {
-            page.open("http://localhost:2000/invoice/pdfdetail/" + req.params.invoiceid).then(function (status) {
+            page.open(hostUrl + "/invoice/pdfdetail/" + req.params.invoiceid).then(function (status) {
                 page.render('public/' + nm + '.pdf').then(function () {
                     var file = 'public/' + nm + '.pdf'
                     res.download(file);

@@ -8,10 +8,10 @@ const invoiceSchema = new Schema({
     address: { type: String },
     mobile: { type: Number },
     entries: [{
-        description: Array,
-        quantity: Array,
-        price: Array,
-        subtotal: { type: Number }
+        description: {type:String},
+        quantity: {type:Number},
+        price: {type:Number},
+        subtotal: {type:Number}
     }],
     status: { type: String, enum: ['draft', 'final'], default: 'draft' },
     gst: { type: Number },
