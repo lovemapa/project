@@ -312,6 +312,7 @@
         </table>
       </div>
       <div id="toggleInvoiceTable" style="padding-right: 10px;">
+        <% if(Invoices.entries && Invoices.entries.length) {%>
         <table class="table sec_table">
           <thead>
             <tr>
@@ -321,14 +322,12 @@
               <th scope="col">Price</th>
               <th scope="col">Subtotal</th>
             </tr>
-
             <% Invoices.entries.forEach((invoice,i)=>{ %>
             <tr>
               <td><%= i+1 %></td>
-
               <td><%= invoice.description %></td>
               <td><%= invoice.quantity %></td>
-              <td><%=Invoices.currency=="INR"?"₹":"$"%><%= invoice.price%> </td>
+              <td><%=Invoices.currency=="INR"?"₹":"$"%><%= invoice.price %> </td>
               <td><%=Invoices.currency=="INR"?"₹":"$"%><%= invoice.subtotal %></td>
             </tr>
             <%})%>
@@ -336,98 +335,88 @@
           <tbody id="tbody2">
           </tbody>
         </table>
+        <%}%>
       </div>
       <table class="table gst_amount">
         <tr>
-          <td><span style="margin-top: 5px;">For Apptunix: <b><%= Invoices.words %> only</b> </span></td>
-          <td>
-            <table class="third_table table1" style="float: right;">
-              <thead>
-                <tr>
-                  <th scope="col">GST<%=Invoices.currency=="INR"?"(18%)":""%></th>
-                  <td><%=Invoices.currency=="INR"?"₹":"$"%><%= Invoices.gst %></td>
-                </tr>
-                <tr>
-                  <th scope="col">Total Amount</th>
-                  <td><%=Invoices.currency=="INR"?"₹":"$"%><%= Invoices.totalamount %></td>
-                </tr>
-              </thead>
-              <tbody id="tbody3">
-              </tbody>
-            </table>
-            <table class="forth_table table2">
-              <thead>
-                <tr>
-                  <th scope="col">PAN Number:</th>
-                  <th>BEOPB0508R</th>
-                </tr>
-                <tr>
-                  <th scope="col">GST Number:</th>
-                  <th>03BEOPB0508RIZH</th>
-                </tr>
-              </thead>
-            </table>
-          </td>
+          <td><span style="margin-top: 5px;">For Apptunix: <b style="text-transform: capitalize;"><%= Invoices.words %>
+        only</b> </span></td>
+        <td>
+          <table class="third_table table1" style="float: right;">
+            <thead>
+              <tr>
+                <th scope="col">GST<%=Invoices.currency=="INR"?"(18%)":""%></th>
+                <td><%=Invoices.currency=="INR"?"₹":"$"%><%= Invoices.gst %></td>
+              </tr>
+              <tr>
+                <th scope="col">Total Amount</th>
+                <td><%=Invoices.currency=="INR"?"₹":"$"%><%= Invoices.totalamount %></td>
+              </tr>
+            </thead>
+            <tbody id="tbody3">
+            </tbody>
+          </table>
+          <table class="forth_table table2">
+            <thead>
+              <tr>
+                <th scope="col">PAN Number:</th>
+                <th>BEOPB0508R</th>
+              </tr>
+              <tr>
+                <th scope="col">GST Number:</th>
+                <th>03BEOPB0508RIZH</th>
+              </tr>
+            </thead>
+          </table>
+        </td>
         </tr>
-
-      </table>
-      <div class="text1">
-        Payment by direct transfer is preferred and remittance shall be made to: Apptunix<br>
-        Account Number: 5020001181999, HDFC Bank, Mohali Branch, S.C.F. 19,Phase 7, SAS Nagar, Mohali, Distt-Ropar
-        Mohali -160061.PUNJAB.<br>
-        SWIFT Code: HDFCINBB IFSC Code: HDFC0000056
-        <br>
-      </div>
-      <div class="text">
-        <div>
-          All disputes subject to Mohali jurisdiction
+        </table>
+        <div class="text1">
+          Payment by direct transfer is preferred and remittance shall be made to: Apptunix<br>
+          Account Number: 5020001181999, HDFC Bank, Mohali Branch, S.C.F. 19,Phase 7, SAS Nagar, Mohali, Distt-Ropar
+          Mohali -160061.PUNJAB.<br>
+          SWIFT Code: HDFCINBB IFSC Code: HDFC0000056
           <br>
-          <br>
-          <b> Kindly send us back the Invoice copy duly Signed and with company Seal.</b><br><br>
-          Receiver Name:
-          <br>
-          Reciever Signature:
-          <br>
-          Department:
-          <br>
-          Received Date:
+        </div>
+        <div class="text">
+          <div>
+            All disputes subject to Mohali jurisdiction
+            <br>
+            <br>
+            <b> Kindly send us back the Invoice copy duly Signed and with company Seal.</b><br><br>
+            Receiver Name:
+            <br>
+            Reciever Signature:
+            <br>
+            Department:
+            <br>
+            Received Date:
+          </div>
         </div>
       </div>
-
     </div>
 
-  </div>
-
-
-  <!-- <div class="row">
-      <tr>
-        <a href="/dashboard"> <div class="back_btn"> <button>Back</button> </div></a>
-        <a href="/invoice/pdf/<%= Invoices._id %>" download><div class="download_btn"><button>Download</button></div></a>
-      </tr>
-    </div> -->
-  <!-- </div> -->
-
-
-  <script>
-    function back() {
-      $.ajax({
-        type: 'GET',
-        url: '/invoices'
-      })
-    }
-    function download() {
-      $.ajax({
-        type: 'GET',
-        url: '/invoice/pdf',
-        contentType: "application/pdf"
-      })
-    }
+    <script>
+      function back() {
+        $.ajax({
+          type: 'GET',
+          url: '/invoices'
+        })
+      }
+      function download() {
+        $.ajax({
+          type: 'GET',
+          url: '/invoice/pdf',
+          contentType: "application/pdf"
+        })
+      }
 
 
 
 
-  </script>
+    </script>
 
 </body>
-
+ <!-- Include scripts -->
+ <% include ../partials/scripts %>
 </html>

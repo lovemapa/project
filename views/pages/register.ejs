@@ -1,77 +1,190 @@
-
+<script> localStorage.setItem("currentUser", "<%= userid%>") </script>
+<%- include('../partials/head') %>
 <style>
-    .cont_iner { width: 98%; margin: 0px auto; padding: 3rem 0px; }
-    .top_header { display: flex; justify-content: space-between; align-items: center; }
-    .top_btn button { background: unset; border: none; padding: 8px 10px; color: #fff !important; }
-    .top_btn button a { color: #fff; text-decoration: none; }
-    .top_btn { margin-bottom: 0; padding-bottom: 120px; }
-    .table { width: 90%; max-width: 90%; margin: 20px 30px 50px; }
-    td button { border: none;  color: #fff !important; outline: none; }
-    a:hover { color: #fff;  text-decoration: none; }
-    table.table th, td { border: 1px solid lightgray;}
-
+    .cont_iner {
+      width: 98%;
+      margin: 0px auto;
+      padding: 3rem 0px;
+    }
+  
+    .top_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    .top_btn button {
+      background: unset;
+      border: none;
+      padding: 8px 10px;
+      color: #fff !important;
+    }
+  
+    .top_btn button a {
+      color: #fff;
+      text-decoration: none;
+    }
+  
+    .top_btn {
+      margin-bottom: 0;
+      padding-bottom: 120px;
+    }
+  
+    .table {
+      width: 90%;
+      max-width: 90%;
+      margin: 20px 30px 50px;
+    }
+  
+    td button {
+      border: none;
+      color: #fff !important;
+      outline: none;
+    }
+  
+    a:hover {
+      color: #fff;
+      text-decoration: none;
+    }
+  
+    table.table th,
+    td {
+      border: 1px solid lightgray;
+    }
+  
     .table>caption+thead>tr:first-child>td,
     .table>caption+thead>tr:first-child>th,
     .table>colgroup+thead>tr:first-child>td,
     .table>colgroup+thead>tr:first-child>th,
     .table>thead:first-child>tr:first-child>td,
-    .table>thead:first-child>tr:first-child>th { border-top: 1px solid lightgray !important; }
-    .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
-    z-index: 3; color: #fff !important; cursor: default; background-color: #000000 !important; border-color: #000000 !important;}
-    .pagination { display: flex !important; justify-content: flex-end !important; margin-right: 170px;}
-  .pagination>li>a, .pagination>li>span {color: #000 !important;}
-  .h1, .h2, .h3, h1, h2, h3 { margin-top: 100px; margin-bottom: 0px; margin-left: 50px; }
-
-  .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .closebtn:hover {
-    color: black;
-  }
+    .table>thead:first-child>tr:first-child>th {
+      border-top: 1px solid lightgray !important;
+    }
+  
+    .pagination>.active>a,
+    .pagination>.active>a:focus,
+    .pagination>.active>a:hover,
+    .pagination>.active>span,
+    .pagination>.active>span:focus,
+    .pagination>.active>span:hover {
+      z-index: 3;
+      color: #fff !important;
+      cursor: default;
+      background-color: #000000 !important;
+      border-color: #000000 !important;
+    }
+  
+    .pagination {
+      display: flex !important;
+      justify-content: flex-end !important;
+      margin-right: 170px;
+    }
+  
+    .pagination>li>a,
+    .pagination>li>span {
+      color: #000 !important;
+    }
+  
+    .h1,
+    .h2,
+    .h3,
+    h1,
+    h2,
+    h3 {
+      margin-top: 100px;
+      margin-bottom: 0px;
+      margin-left: 50px;
+    }
+  
+    .closebtn {
+      margin-left: 15px;
+      color: white;
+      font-weight: bold;
+      float: right;
+      font-size: 22px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+  
+    .closebtn:hover {
+      color: black;
+    }
+  
+    .input-group-alternative {
+      box-shadow: unset !important;
+      border: solid 1px #ddd !important;
+    }
+  
+    .form-control {
+      border: 1px solid #ddd !important;
+    }
+  
+    .input-group .form-control:not(:first-child) {
+      padding-left: 15px !important;
+    }
+  
+    .input-group>.form-control:not(:first-child),
+    .input-group>.custom-select:not(:first-child) {
+      border: unset !important;
+      border-left: solid 1px #ddd !important;
+    }
+  
+    input,
+    select {
+      color: #000 !important;
+    }
+  
+    @media(max-width:991px) {
+      .table-responsive form {
+        margin: 0 0px 50px !important;
+      }
+  
+      .card-header:first-child {
+        padding: 0 !important;
+      }
+  
+    }
   </style>
-<script> localStorage.setItem("currentUser","<%= userid%>") </script>
-<%- include('../partials/head') %>
 <body>
-    <% include ../partials/sidebar %>
+  <% include ../partials/sidebar %>
   <div class="main-content">
-    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main" >
-      <div class="container-fluid" >
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/"><b>ADD USER</b></a>
+    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+      <div class="container-fluid">
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/addUser"><b>ADD USER</b></a>
       </div>
     </nav>
     <%-  include('../partials/header') %>
     <div class="container-fluid mt--7">
-        <!-- Table -->
-        <div class="row">
-          <div class="col">
-            <div class="card shadow">
-              <div class="card-header border-0">
-              </div>
-              <div class="table-responsive">
-                <form role="form" action="addUser" method="POST">
-                  <% if ( typeof err !== "undefined" ) { %>
-                    <div class="alert" style="margin-left: 250px; margin-right: 250px; background-color: #A4B1F9; color: black"><%= err %>
-                      <span class="close" onclick="this.parentElement.style.display='none';" aria-hidden="true">&times;</span>
-                    </div>
-                  <% } %>
-                  <% if ( typeof err1 !== "undefined" ) { %>
-                    <div class="alert" style="margin-left: 250px; margin-right: 250px; background-color: #A4B1F9; color: black"><%= err1 %>
-                      <span class="close" onclick="this.parentElement.style.display='none';" aria-hidden="true">&times;</span>
-                    </div>
-                  <% } %>
-                  <% if ( typeof err5 !== "undefined" ) { %>
-                    <div class="alert" style="margin-left: 250px; margin-right: 250px; background-color: #A4B1F9; color: black"><%= err5 %>
-                      <span class="close" onclick="this.parentElement.style.display='none';" aria-hidden="true">&times;</span>
-                    </div>
-                  <% } %>
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+            </div>
+            <div class="table-responsive">
+              <form role="form" action="addUser" method="POST">
+                <% if ( typeof err !== "undefined" ) { %>
+                <div class="alert"
+                  style="margin-left: 250px; margin-right: 250px; background-color: #A4B1F9; color: black"><%= err %>
+                  <span class="close" onclick="this.parentElement.style.display='none';"
+                    aria-hidden="true">&times;</span>
+                </div>
+                <% } %>
+                <% if ( typeof err1 !== "undefined" ) { %>
+                <div class="alert"
+                  style="margin-left: 250px; margin-right: 250px; background-color: #A4B1F9; color: black"><%= err1 %>
+                  <span class="close" onclick="this.parentElement.style.display='none';"
+                    aria-hidden="true">&times;</span>
+                </div>
+                <% } %>
+                <% if ( typeof err5 !== "undefined" ) { %>
+                <div class="alert"
+                  style="margin-left: 250px; margin-right: 250px; background-color: #A4B1F9; color: black"><%= err5 %>
+                  <span class="close" onclick="this.parentElement.style.display='none';"
+                    aria-hidden="true">&times;</span>
+                </div>
+                <% } %>
 
 
                 <div class="form-group">
@@ -80,11 +193,12 @@
                       <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                     </div>
                     <input type="text" name="name" onkeypress="return (event.charCode > 64 && 
-                      event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" placeholder="Name"   class="form-control" required>
+                      event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" placeholder="Name"
+                      class="form-control" required>
 
                   </div>
                   <% if (locals.messages && messages.errors && messages.errors.name) { %>
-                    <strong class="invalid-feedback" style="display: block"><%= messages.errors.name %></strong>
+                  <strong class="invalid-feedback" style="display: block"><%= messages.errors.name %></strong>
                   <% } %>
                 </div>
                 <div class="form-group">
@@ -92,22 +206,25 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input class="form-control" name="email" placeholder="Email" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{2}[a-zA-Z]{3,})" type="email" required>
+                    <input class="form-control" name="email" placeholder="Email"
+                      pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{2}[a-zA-Z]{3,})"
+                      type="email" required>
                   </div>
                   <% if (locals.messages && messages.errors && messages.errors.email) { %>
-                    <strong class="invalid-feedback" style="display: block"><%= messages.errors.email %></strong>
+                  <strong class="invalid-feedback" style="display: block"><%= messages.errors.email %></strong>
                   <% } %>
-                  
+
                 </div>
                 <div class="form-group">
                   <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control" id="password" name="password" placeholder="Password" onkeyup="comparepassword()" minlength="8" maxlength="15" type="password" required>
+                    <input class="form-control" id="password" name="password" placeholder="Password" minlength="8"
+                      maxlength="15" type="password" required>
                   </div>
                   <% if (locals.messages && messages.errors && messages.errors.password) { %>
-                    <strong class="invalid-feedback" style="display: block"><%= messages.errors.password %></strong>
+                  <strong class="invalid-feedback" style="display: block"><%= messages.errors.password %></strong>
                   <% } %>
                 </div>
                 <div class="form-group">
@@ -115,42 +232,51 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" type="password" minlength="8" maxlength="15" onkeyup="comparepassword()" required>
+                    <input class="form-control" id="confirmpassword" name="confirmpassword"
+                      placeholder="Confirm Password" type="password" minlength="8" maxlength="15"
+                      onkeyup="comparepassword()" required>
                   </div>
                   <% if (locals.messages && messages.errors && messages.errors.confirmpassword) { %>
-                    <strong class="invalid-feedback" style="display: block"><%= messages.errors.confirmpassword %></strong>
+                  <strong class="invalid-feedback"
+                    style="display: block"><%= messages.errors.confirmpassword %></strong>
                   <% } %>
                 </div>
-                <div class="form-group" >    
+                <div class="form-group">
                   <div>
-                    <select name="role" id="ddlViewBy" class="form-control" onchange="onChange()" placeholder="User Role">
-                      <option value="Developer" id="developer" style="padding-left: 0px; padding-right: 18px; width: 38%;">Developer</option>
-                      <option value="Sales" id="sales" style="padding-left: 0px; padding-right: 18px; width: 38%;">Sales</option>
+                    <select name="role" id="ddlViewBy" class="form-control" onchange="onChange()"
+                      placeholder="User Role">
+                      <option value="Developer" id="developer"
+                        style="padding-left: 0px; padding-right: 18px; width: 38%;">Developer</option>
+                      <option value="Sales" id="sales" style="padding-left: 0px; padding-right: 18px; width: 38%;">Sales
+                      </option>
                       <option value="PM" id="pm" style="padding-left: 0px; padding-right: 18px; width: 38%;">PM</option>
-                      <option value="Accounts" id="accounts" style="padding-left: 0px; padding-right: 18px; width: 38%;">Accounts</option>
+                      <option value="Accounts" id="accounts"
+                        style="padding-left: 0px; padding-right: 18px; width: 38%;">Accounts</option>
 
                     </select>
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type= "submit" id="submit" class="btn btn-primary mt-4">Create account</button>
+                  <button type="submit" id="submit" class="btn btn-primary mt-4">Create account</button>
                 </div>
               </form>
-              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+    <!-- Include scripts -->
+    <% include ../partials/scripts %>
   <script>
-      //   var isValidated  =false
-  function check(e) {
-    e.preventDefault()
-    console.log(document.getElementById("confirmpassword").nodeValue)
-    return false
-  }
+    //   var isValidated  =false
+    function check(e) {
+      e.preventDefault()
+      console.log(document.getElementById("confirmpassword").nodeValue)
+      return false
+    }
   </script>
 
 </body>
 
-
+</html>

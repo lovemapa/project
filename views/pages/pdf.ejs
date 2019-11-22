@@ -318,7 +318,8 @@
       <table class="table gst_amount">
 
         <tr>
-          <td><span style="margin-top: 5px;">For Apptunix: <b><%= Invoices.words %> only</b></span></td>
+          <td><span style="margin-top: 5px;">For Apptunix: <b style="text-transform: capitalize;"><%= Invoices.words %>
+                only</b></span></td>
           <td>
             <table class="third_table table1" style="float: right;">
               <thead>
@@ -388,5 +389,7 @@
 
 
 </body>
+<!-- Include scripts -->
+<% include ../partials/scripts %>
 
 </html>

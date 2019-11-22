@@ -1,52 +1,67 @@
+<html lang="en">
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Optional JS -->
+    <script src="/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="/vendor/chart.js/dist/Chart.extension.js"></script>
+    <!-- Argon JS -->
+    <script src="/js/argon.min.js?v=1.0.0"></script>
 <style>
-  .with-nav-tabs.panel-default .nav-tabs>li>a,
-  .with-nav-tabs.panel-default .nav-tabs>li>a:hover,
-  .with-nav-tabs.panel-default .nav-tabs>li>a:focus {
-    color: #777;
+  .h2 {
+    font-size: 18px !important;
+    line-height: normal !important;
   }
 
-  .with-nav-tabs.panel-default .nav-tabs>.open>a,
-  .with-nav-tabs.panel-default .nav-tabs>.open>a:hover,
-  .with-nav-tabs.panel-default .nav-tabs>.open>a:focus,
-  .with-nav-tabs.panel-default .nav-tabs>li>a:hover,
-  .with-nav-tabs.panel-default .nav-tabs>li>a:focus {
-    color: #777;
-    background-color: #ddd;
-    border-color: transparent;
+  table th,
+  table td,
+  table tr {
+    border: solid 1px #ddd !important;
   }
 
-  .with-nav-tabs.panel-default .nav-tabs>li.active>a,
-  .with-nav-tabs.panel-default .nav-tabs>li.active>a:hover,
-  .with-nav-tabs.panel-default .nav-tabs>li.active>a:focus {
-    color: #555;
-    background-color: #fff;
-    border-color: #ddd;
-    border-bottom-color: transparent;
+  @media(max-width:1200px) {
+    .table_row {
+      overflow-x: scroll;
+    }
+
+    .h2 {
+      font-size: 15px !important;
+    }
   }
 
-  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu {
-    background-color: #f5f5f5;
-    border-color: #ddd;
-  }
+  @media(max-width:991px) {
+    .invoice_home_inner_row {
+      flex-direction: column;
+    }
 
-  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>li>a {
-    color: #777;
-  }
+    .card-header {
+      padding: 0 !important;
+    }
 
-  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>li>a:hover,
-  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>li>a:focus {
-    background-color: #ddd;
-  }
+    .current_balance_div {
+      margin-top: 12px;
+    }
 
-  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>.active>a,
-  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>.active>a:hover,
-  .with-nav-tabs.panel-default .nav-tabs>li.dropdown .dropdown-menu>.active>a:focus {
-    color: #fff;
-    background-color: #555;
+    .payment_volume_row {
+      flex-direction: column;
+    }
+
+    .payment_volume_col_right {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .payment_volume_col {
+      width: 100%;
+    }
+
+    .table_container {
+      padding: 0 !important;
+      margin-top: 2rem;
+    }
+
+
   }
 </style>
-
-
 
 <script> localStorage.setItem("currentUser", "<%= userid%>") </script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -72,38 +87,64 @@
 
     <div class="container-fluid mt--7">
       <!-- Table -->
-      <div class="row">
-        <div class="col">
+      <div class="invoice_main_page">
+        <div class="invoice_inner_row">
           <div class="card shadow">
             <div class="card-header border-0">
-              <div class="row"
-                style="border: 2px solid lightgray;margin-left: -24px;padding-top: 15px; padding-bottom: 15px; margin-right: 5px;">
-                <div class="date-calender" id="reportrange"
-                  style="background: #fff;margin-right: 35%; border: 1px solid lightgray;">
-                  <i class="fa fa-calendar"></i>
-                  <span><i class="fa fa-caret-down"></i></span>
+              <div>
+                <div class="invoice_home_inner_row"
+                  style="border-bottom: 1px solid lightgray;padding-top: 15px; padding-bottom: 15px; display:flex;align-items:center;justify-content: space-between;margin-bottom: 2rem;padding-bottom: 1rem;">
+                  <div class="date-calender" id="reportrange"
+                    style="background: #fff;border: 1px solid #ddd;padding: 8px 15px;border-radius: 3px;">
+                    <i class="fa fa-calendar"></i>
+                    <span><i class="fa fa-caret-down"></i></span>
+                  </div>
+                  <div class="current_balance_div">
+                    <b>Current Balance :</b>
+                    <%- Invoices.currency == "USD" ? "$":"₹" %>
+                    <% if(totalINR){ %>
+                    <label><%= totalINR %></label>
+                    <% } else{ %>
+                    <label>0</label>
+                    <% } %> ,
+                    <%=Invoices.currency=="INR"?"₹":"$"%>
+                    <% if(totalUSD){ %>
+                    <label><%= totalUSD %></label>
+                    <% } else{ %>
+                    <label>0</label>
+                    <% } %>
+                  </div>
                 </div>
-                <br>
-                <span style="float: right; margin-right: -100%;">
-                  <b>Current Balance :</b><%- Invoices.currency == "USD" ? "$":"₹" %><%= totalINR %> $<%= totalUSD %>
-                </span>
               </div>
-              <br>
-              <br>
-              <div style="width: 100%;">
-                <div class="row">
-                  <div class="col-sm">
-                    <div class="card-body"
-                      style="border: 1px solid lightgray; width: 250px; height: 150px;margin-left: -24px;">
+              <div class="payment_volume_div">
+                <div class="payment_volume_row"
+                  style="display:flex;align-items:flex-start;justify-content: space-between;">
+                  <div class="payment_volume_col">
+                    <div class="card-body" style="border: 1px solid #ddd;">
                       <h5 class="card-title text-uppercase text-muted mb-0"></h5>
-                      <span class="h2 font-weight-bold mb-0">Payment Volume in $
-                        <%= totalUSD %></span><br>
-                      <span class="h2 font-weight-bold mb-0">Payment Volume in ₹ <%= totalINR %></span>
+                      <span class="h2 font-weight-bold mb-0">Payment Volume in
+                        <%=Invoices.currency=="INR"?"₹":"$"%>
+                        <% if(totalUSD){ %>
+                        <label><%= totalUSD %></label>
+                        <% } else{ %>
+                        <label>0</label>
+                        <% } %>
+                        <!-- <%= totalUSD %> -->
+                      </span>
+                      <br />
+                      <span class="h2 font-weight-bold mb-0">Payment Volume in
+                        <%- Invoices.currency == "USD" ? "$":"₹" %>
+                        <% if(totalINR){ %>
+                        <label><%= totalINR %></label>
+                        <% } else{ %>
+                        <label>0</label>
+                        <% } %>
+                        <!-- <%= totalINR %> -->
+                      </span>
                     </div>
                   </div>
-                  <div class="col-sm">
-                    <div class="card-body"
-                      style="border: 1px solid lightgray; width: 250px; height: 150px; margin-left: 190px;">
+                  <div class="payment_volume_col_right">
+                    <div class="card-body" style="border: 1px solid #ddd;">
                       <h5 class="card-title text-uppercase text-muted mb-0"></h5>
                       <span class="h2 font-weight-bold mb-0"> No. Of Payments<br>
                         <%= Invoices.length %>
@@ -113,23 +154,26 @@
                 </div>
               </div>
             </div>
-            <div class="container">
-              <div class="row">
+            <div class="table_container" style="padding: 1rem 1.5rem;">
+              <div class="table_row">
+                  <% if(Invoices.length == 0){ %>
+                    <h4 style="text-align: center;">No Records Found !</h4>
+                    <% } %>
+                  <% if(Invoices.length != 0){ %>
                 <table class="table align-items-center table-flush">
                   <thead class="thead-light">
                     <tr>
-                      <th scope="col" style="color: #000;font-weight: 700;">Invoice Number</th>
-                      <th scope="col" style="color: #000;font-weight: 700;">User Name</th>
-                      <th scope="col" style="color: #000;font-weight: 700;">Issue Date</th>
-                      <th scope="col" style="color: #000;font-weight: 700;">Due Date</th>
-                      <th scope="col" style="color: #000;font-weight: 700;">Currency</th>
-                      <th scope="col" style="color: #000;font-weight: 700;">GST</th>
-                      <th scope="col" style="color: #000;font-weight: 700;">Total Amount</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Invoice Number</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">User Name</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Issue Date</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Due Date</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Currency</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">GST</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Total Amount</th>
                     </tr>
                   </thead>
                   <tbody style="border-bottom: 1px solid #ababab;">
-                    <% Invoices.forEach((invoice)=>{ %>
-
+                      <% Invoices.forEach((invoice)=>{ %>
                     <tr>
                       <th scope="row">
                         <%= invoice.invoiceno %>
@@ -156,6 +200,7 @@
                     <%})%>
                   </tbody>
                 </table>
+                <%}%>
               </div>
             </div>
           </div>
@@ -186,10 +231,8 @@
     }
 
 
-    var start = test1 ? moment(test1, 'DD/MM/YYYY') : moment().subtract(1, 'days');
+    var start = test1 ? moment(test1, 'DD/MM/YYYY') : moment().subtract(2, 'days');
     var end = test2 ? moment(test2, 'DD/MM/YYYY') : moment();
-    // console.log(moment());
-
     function cb(start, end) {
       $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
     }
@@ -207,7 +250,7 @@
     cb(start, end);
   });
   $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
-    var url = addParameterToURL('http://localhost:2000/home', 'start', picker.startDate.format('DD/MM/YYYY'));
+    var url = addParameterToURL('/home', 'start', picker.startDate.format('DD/MM/YYYY'));
     var windowUrl = addParameterToURL(url, 'end', picker.endDate.format('DD/MM/YYYY'));
     window.location = windowUrl;
 
@@ -228,3 +271,5 @@
     return _url;
   }
 </script>
+
+</html>

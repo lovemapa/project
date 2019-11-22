@@ -76,6 +76,8 @@ class userController {
                 let invoiceno = "MO/" + "19-20/688/" + count;
 
                 let entries = []
+
+
                 for (var j = 0; j < body.price.length; j++) {
                     entries.push({
                         description: body.description[j],

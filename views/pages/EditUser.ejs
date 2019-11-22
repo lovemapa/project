@@ -93,6 +93,17 @@
     margin-bottom: 0px;
     margin-left: 50px;
   }
+
+  input {
+    border-left: solid 1px #ddd !important;
+    box-shadow: unset !important;
+    padding-left: 15px !important;
+  }
+
+  .input-group-alternative {
+    box-shadow: unset !important;
+    border: solid 1px #ddd !important;
+  }
 </style>
 <script> localStorage.setItem("currentUser", "<%= userid%>") </script>
 <%- include('../partials/head') %>
@@ -180,4 +191,6 @@
   </div>
   </div>
 </body>
+ <!-- Include scripts -->
+ <% include ../partials/scripts %>
 </html>

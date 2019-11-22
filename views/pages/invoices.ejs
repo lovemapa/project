@@ -126,63 +126,64 @@
           <div class="card shadow">
             <div class="card-header border-0">
             </div>
-            <div class="table-responsive">
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col" style="color: #000;font-weight: 700;">Invoice Number</th>
-                    <th scope="col" style="color: #000;font-weight: 700;"> User Name</th>
-                    <th scope="col" style="color: #000;font-weight: 700;">Issue Date</th>
-                    <th scope="col" style="color: #000;font-weight: 700;">Due Date</th>
-                    <th scope="col" style="color: #000;font-weight: 700;">Currency</th>
-                    <th scope="col" style="color: #000;font-weight: 700;">GST</th>
-                    <th scope="col" style="color: #000;font-weight: 700;">Total Amount</th>
-                    <th scope="col" style="color: #000;font-weight: 700;">Action</th>
-                    <th scope="col" style="color: #000;font-weight: 700;">Edit</th>
-                    <th scope="col" style="color: #000;font-weight: 700;">Status</th>
-                  </tr>
-                </thead>
-                <tbody style="border-bottom: 1px solid #ababab;">
-                  <% Invoices.forEach((invoice)=>{ %>
-                  <tr>
-                    <th scope="row">
-                      <%= invoice.invoiceno %>
-                    </th>
-                    <td>
-                      <%= invoice.userId.name %>
-                    </td>
-                    <td>
-                      <%= invoice.issuedate %>
-                    </td>
-                    <td>
-                      <%= invoice.duedate %>
-                    </td>
-                    <td>
-                      <%= invoice.currency %>
-                    </td>
-                    <td>
-                      <%- invoice.currency == "USD" ? "$":"₹" %><%= invoice.gst %>
-                    </td>
-                    <td>
-                      <%- invoice.currency == "USD" ? "$":"₹" %><%= invoice.totalamount %>
-                    </td>
-                    <td>
-                      <a href="/invoice/detail/<%= invoice._id %>"><i class="btn btn-primary fa fa-eye"
-                          style="padding: 4px;"></i></a>
-                      <a href="/invoice/delete/<%= invoice._id %>" onclick="alert('Are you sure ?');"><i type="button"
-                          class="btn btn-danger fa fa-trash" style="padding: 4px;"></i></a>
-                    </td>
-                    <td>
-                      <a href="/invoice/edit/<%= invoice._id %>"><i class="btn btn-primary fa fa-edit"
-                          style="padding: 4px;"></i></a>
-                    </td>
-                    <td>
-                      <%= invoice.status %>
-                    </td>
-                  </tr>
-                  <%})%>
-                </tbody>
-              </table>
+            <div class="table_respon_inner">
+              <div class="table-responsive">
+
+
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Invoice Number</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;"> User Name</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Issue Date</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Due Date</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Currency</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">GST</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Total Amount</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Status</th>
+                      <th scope="col" style="color: #32325d;font-weight: 600;font-size:14px;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody style="border-bottom: 1px solid #ababab;">
+                    <% Invoices.forEach((invoice)=>{ %>
+                    <tr>
+                      <th scope="row">
+                        <%= invoice.invoiceno %>
+                      </th>
+                      <td>
+                        <%= invoice.userId.name %>
+                      </td>
+                      <td>
+                        <%= invoice.issuedate %>
+                      </td>
+                      <td>
+                        <%= invoice.duedate %>
+                      </td>
+                      <td>
+                        <%= invoice.currency %>
+                      </td>
+                      <td>
+                        <%- invoice.currency == "USD" ? "$":"₹" %><%= invoice.gst %>
+                      </td>
+                      <td>
+                        <%- invoice.currency == "USD" ? "$":"₹" %><%= invoice.totalamount %>
+                      </td>
+                      <td>
+                        <%= invoice.status %>
+                      </td>
+                      <td>
+                        <a href="/invoice/detail/<%= invoice._id %>"><i class="btn btn-primary fa fa-eye"
+                            style="padding: 5px 7px;border-radius: 4px;"></i></a>
+                        <a href="/invoice/delete/<%= invoice._id %>" onclick="alert('Are you sure ?');"><i type="button"
+                            class="btn btn-danger fa fa-trash" style="padding: 5px 7px;border-radius: 4px;"></i></a>
+                        <a href="/invoice/edit/<%= invoice._id %>"><i class="btn btn-primary fa fa-edit"
+                            style="padding: 5px 7px;border-radius: 4px;"></i></a>
+                      </td>
+                    </tr>
+                    <%})%>
+                  </tbody>
+                </table>
+              </div>
               <% if (pages > 0) { %>
               <ul class="pagination text-center">
                 <% if (current == 1) { %>

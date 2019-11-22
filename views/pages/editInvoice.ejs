@@ -1,478 +1,584 @@
 <html lang="en">
+<!-- Argon Scripts -->
+<!-- Core -->
+<script src="/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Optional JS -->
+<script src="/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="/vendor/chart.js/dist/Chart.extension.js"></script>
+<!-- Argon JS -->
+<script src="/js/argon.min.js?v=1.0.0"></script>
+
+<style>
+  .back_button {
+    display: flex;
+    align-items: center;
+  }
+
+  /* custom styles */
+  label {
+    display: block;
+  }
+
+  .sec_table td,
+  .sec_table th,
+  table.sec_table {
+    border: solid 1px #d9d9d9 !important;
+  }
+
+  .main_table td,
+  .main_table th,
+  table.main_table {
+    border: solid 1px #d9d9d9 !important;
+    vertical-align: top;
+    margin-right: 10px;
+  }
 
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  .table.sec_table>tbody>tr>td,
+  .table.sec_table>tbody>tr>th,
+  .table.sec_table>tfoot>tr>td,
+  .table.sec_table>tfoot>tr>th,
+  .table.sec_table>thead>tr>td,
+  .table.sec_table>thead>tr>th {
+    border-top: solid 1px #d9d9d9 !important;
+  }
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <!-- <link type="text/css" href="/css/argon.css?v=1.0.0" rel="stylesheet"> -->
-  <style>
-    .back_button {
-      display: flex;
-      align-items: center;
-    }
+  .table.third_table>tbody>tr>td,
+  .table.third_table>tbody>tr>th,
+  .table.third_table>tfoot>tr>td,
+  .table.third_table>tfoot>tr>th,
+  .table.third_table>thead>tr>td,
+  .table.third_table>thead>tr>th {
+    border: solid 1px #ddd !important;
+  }
 
-    [type="date"] {
-      background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
-    }
+  table td,
+  table th,
+  table tr {
+    border: solid 1px #ffffff !important;
+  }
 
-    [type="date"]::-webkit-inner-spin-button {
-      display: none;
-    }
+  body {
+    margin: 0;
+    background: #fff !important;
+  }
 
-    [type="date"]::-webkit-calendar-picker-indicator {
-      opacity: 0;
-    }
+  h1,
+  .h2,
+  .h3,
+  h1,
+  h2,
+  h3 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
 
-    /* custom styles */
-    label {
-      display: block;
-    }
+  h1 {
+    margin-top: 30px;
+    margin-bottom: 40px;
+  }
 
-    .sec_table td,
-    .sec_table th,
-    table.sec_table {
-      border: solid 1px #d9d9d9 !important;
-    }
+  .dashboard {
+    margin: 90px 0;
+  }
 
-    .main_table td,
-    .main_table th,
-    table.main_table {
-      border: solid 1px #d9d9d9 !important;
-      vertical-align: top;
-      margin-right: 10px;
-    }
+  button a {
+    color: #fff;
+  }
+
+  div#toggleInvoice ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0px;
+    margin-top: 2rem;
+  }
+
+  div#toggleInvoice ul.creat_top_From li {
+    width: 49%;
+    margin-bottom: 2rem;
+  }
+
+  /* 
+        .slector_list {
+          width: 41%;
+        } */
+
+  .conta_iner {
+    width: 1200px;
+    margin: 0px auto;
+    padding: 6rem 0px;
+  }
+
+  .gst_num_main {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .gst_number_box {
+    width: 70%;
+    height: 147px;
+    padding: 17px;
+  }
+
+  .table_main {
+    width: 28% !important;
+  }
 
 
-    .table.sec_table>tbody>tr>td,
-    .table.sec_table>tbody>tr>th,
-    .table.sec_table>tfoot>tr>td,
-    .table.sec_table>tfoot>tr>th,
-    .table.sec_table>thead>tr>td,
-    .table.sec_table>thead>tr>th {
-      border-top: solid 1px #d9d9d9 !important;
-    }
+  table.sec_table {
+    margin-top: 3rem;
+    border: solid 1px #d9d9d9 !important;
+  }
 
-    .table.third_table>tbody>tr>td,
-    .table.third_table>tbody>tr>th,
-    .table.third_table>tfoot>tr>td,
-    .table.third_table>tfoot>tr>th,
-    .table.third_table>thead>tr>td,
-    .table.third_table>thead>tr>th {
-      border: solid 1px #ddd !important;
-    }
+  h3 {
+    font-size: 30px;
+    width: 948px;
+  }
 
-    table td,
-    table th,
-    table tr {
-      border: solid 1px #ffffff !important;
-    }
+  table.third_table {
+    width: 100% !important;
+    float: right;
+    border: 1px solid lightgray;
+    margin-left: 300px;
+  }
 
-    body {
-      margin: 0;
-      background: #fff !important;
-    }
+  table.forth_table {
+    width: 100% !important;
+    float: right;
+    margin-top: 25px;
+  }
 
-    h1,
-    .h2,
-    .h3,
-    h1,
-    h2,
-    h3 {
-      margin-top: 0px;
-      margin-bottom: 0px;
-    }
+  .download_btn button {
+    color: #fff;
+    font-size: 16px;
+  }
 
-    h1 {
-      margin-top: 30px;
-      margin-bottom: 40px;
-    }
+  .cont_main h1 {
+    font-size: 27px;
+    font-weight: 600;
+  }
 
-    .dashboard {
-      margin: 90px 0;
-    }
+  .cont_main h3 {
+    font-size: 21px;
+    font-weight: 500;
+    padding: 1rem 0px;
+  }
 
-    button a {
-      color: #fff;
-    }
+  a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
 
-    div#toggleInvoice ul {
-      display: flex;
+  .text {
+    padding-block-start: 50px;
+  }
+
+  .text1 {
+    padding-block-start: 10px;
+  }
+
+  .main_table {
+    width: 100%;
+  }
+
+  .nullHeading:first-child {
+    border-left: solid 1px #d9d9d9 !important;
+  }
+
+  .nullHeading {
+    width: 8% !important;
+    border-left: unset !important;
+    border-right: unset !important;
+  }
+
+  table.table.gst_amount td,
+  table.table.gst_amount th {
+    border: unset !important;
+  }
+
+  table.table.gst_amount td table.third_table.table1 th,
+  table.table.gst_amount td table.third_table.tablel td,
+  table.table.gst_amount td table.third_table.tablel tr {
+    border: solid 1px gray !important;
+  }
+
+  table.table.gst_amount td table.forth_table.table2 th,
+  table.table.gst_amount td table.forth_table.table2 td,
+  table.table.gst_amount td table.forth_table.table2 tr {
+    border: solid 1px #ddd !important;
+  }
+
+  table.table.gst_amount td:last-child {
+    width: 40%;
+  }
+
+  table.table.gst_amount td table.third_table.table1 tbody {
+    border: solid 1px gray !important;
+  }
+
+  #toggleInvoiceTable {
+    padding-right: 10px;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background-color: #5e72e4;
+    border-color: #5e72e4;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    color: #fff;
+    background-color: #5e72e4;
+    border-color: #5e72e4;
+    border: none;
+  }
+
+  textarea.form-control {
+    height: auto;
+    width: 102.5%;
+    border: none;
+    border-bottom: 1px solid lightgray;
+  }
+
+  .form_row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .create_invoice_left {
+    box-shadow: 0 0 20px #00000024;
+    padding: 20px;
+    width: 65%;
+  }
+
+  input,
+  select,
+  textarea {
+    background-color: #fff !important;
+    border: solid 1px #ddd;
+    padding: 11px;
+    resize: none;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  div#toggleInvoice ul.creat_top_From li:nth-child(3) {
+    width: 100%;
+  }
+
+  div#toggleInvoice ul li:nth-child(3) textarea {
+    height: 90px;
+    resize: none;
+  }
+
+  input::placeholder,
+  select::placeholder,
+  textarea::placeholder {
+    color: #999 !important;
+    opacity: 1 !important;
+  }
+
+  div#second_form ul {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  #second_form .form_group {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+
+  div#second_form ul li {
+    width: 24%;
+  }
+
+  div#second_form ul li input {
+    width: 100%;
+  }
+
+  .negative_positive_button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  @media(max-width:1200px) {
+    .form_row {
       flex-wrap: wrap;
-      justify-content: space-between;
-      list-style: none;
-      padding: 0px;
-      margin-top: 2rem;
     }
 
-    div#toggleInvoice ul li {
-      width: 49%;
-      margin-bottom: 2rem;
-    }
-
-    /* 
-      .slector_list {
-        width: 41%;
-      } */
-
-    .conta_iner {
-      width: 1200px;
-      margin: 0px auto;
-      padding: 6rem 0px;
-    }
-
-    .gst_num_main {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .gst_number_box {
-      width: 70%;
-      height: 147px;
-      padding: 17px;
-    }
-
-    .table_main {
-      width: 28% !important;
-    }
-
-    table th,
-    table td {
-      font-size: 14px;
-      padding: 1px 7px;
-    }
-
-    table.sec_table {
-      margin-top: 3rem;
-      border: solid 1px #d9d9d9 !important;
-    }
-
-    h3 {
-      font-size: 30px;
-      width: 948px;
-    }
-
-    table.third_table {
-      width: 100% !important;
-      float: right;
-      border: 1px solid lightgray;
-      margin-left: 300px;
-    }
-
-    table.forth_table {
-      width: 100% !important;
-      float: right;
-      margin-top: 25px;
-    }
-
-    .download_btn button {
-      color: #fff;
-      font-size: 16px;
-    }
-
-    .cont_main h1 {
-      font-size: 27px;
-      font-weight: 600;
-    }
-
-    .cont_main h3 {
-      font-size: 21px;
-      font-weight: 500;
-      padding: 1rem 0px;
-    }
-
-    a:hover {
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .text {
-      padding-block-start: 50px;
-    }
-
-    .text1 {
-      padding-block-start: 10px;
-    }
-
-    .main_table {
+    .create_invoice_left {
       width: 100%;
     }
 
-    .nullHeading:first-child {
-      border-left: solid 1px #d9d9d9 !important;
+    .create_invoice_right.invoices--side {
+      margin-top: 3rem;
+      text-align: center;
+      width: 100%;
     }
 
-    .nullHeading {
-      width: 8% !important;
-      border-left: unset !important;
-      border-right: unset !important;
+    .create_invoice_right.invoices--side .btn-group-vertical {
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    table.table.gst_amount td,
-    table.table.gst_amount th {
-      border: unset !important;
+    .create_invoice_right_button {
+      width: 32% !important;
+      margin: 0 !important;
     }
 
-    table.table.gst_amount td table.third_table.table1 th,
-    table.table.gst_amount td table.third_table.tablel td,
-    table.table.gst_amount td table.third_table.tablel tr {
-      border: solid 1px gray !important;
+    .create_invoice_right_button button {
+      padding: 9px 20px !important;
+    }
+  }
+
+  @media(max-width:991px) {
+    .create_invoice_right.invoices--side .btn-group-vertical {
+      flex-direction: column;
     }
 
-    table.table.gst_amount td table.forth_table.table2 th,
-    table.table.gst_amount td table.forth_table.table2 td,
-    table.table.gst_amount td table.forth_table.table2 tr {
-      border: solid 1px #ddd !important;
+    .create_invoice_right_button {
+      width: 100% !important;
+      margin-bottom: 10px !important;
     }
 
-    table.table.gst_amount td:last-child {
-      width: 40%;
+    .card-header {
+      padding: 0 !important;
     }
 
-    table.table.gst_amount td table.third_table.table1 tbody {
-      border: solid 1px gray !important;
+    div#toggleInvoice ul li:nth-child(3) textarea {
+      height: 60px;
     }
 
-    #toggleInvoiceTable {
-      padding-right: 10px;
+
+  }
+
+  @media(max-width:767px) {
+    div#toggleInvoice ul.creat_top_From li {
+      width: 100%;
     }
 
-    .btn-primary {
-      color: #fff;
-      background-color: #5e72e4;
-      border-color: #5e72e4;
-      border: none;
+    div#second_form ul li {
+      width: 100%;
+      margin-bottom: 10px;
     }
-
-    .btn-primary:hover {
-      color: #fff;
-      background-color: #5e72e4;
-      border-color: #5e72e4;
-      border: none;
-    }
-
-    textarea.form-control {
-      height: auto;
-      width: 102.5%;
-      border: none;
-      border-bottom: 1px solid lightgray;
-    }
-  </style>
-  <title>Invoices</title>
-
-</head>
+  }
+</style>
+<title>Invoices</title>
 <% include ../partials/head %>
 
 <body>
 
 
-  <% include ../partials/createinvoice/sidebar %>
+  <% include ../partials/sidebar %>
   <div class="main-content">
 
 
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
-        <a class="h4 mb-0 text-left text-white text-uppercase d-none d-lg-inline-block"><b
-            style="margin-left: -500px;font-size: 20px;">Edit Invoice</b></a>
+        <a class="h4 mb-0 text-left text-white text-uppercase d-none d-lg-inline-block"><b>Edit Invoice</b></a>
       </div>
     </nav>
-
-    <% include ../partials/createinvoice/header %>
+    <% include ../partials/header %>
     <div class="container-fluid1 mt--8" style="padding-right: 10px;padding-left: 10px;">
-
-
       <div class="sub_main_parent" style="width: 100%;">
         <div class="card shadow">
-          <div id="toggleInvoice">
-            <form id="first_form" role="form" action="/invoice/edit" method="POST">
-              <div class="row">
-                <div class="col-md-8 col-sm-8" style="border: 1px solid lightgray;">
-                  <ul>
-                    <li>
-                      <div class="form-group">
-                        <label class="control-label " for="start">Name<span style=" color: red">*</span></label>
-                        <div class="">
-                          <input type="text" id="name" class="slector_list" name="name" placeholder="Enter Name"
-                            style="border: none;border-bottom: 1px solid lightgray;width: 52%;"
-                            value="<%= Invoices.name %>">
+          <div class="card-header">
+            <div id="toggleInvoice">
+              <form id="first_form" role="form" action="/invoice/edit" method="POST">
+                <div class="form_row">
+                  <div class="create_invoice_left">
+                    <ul>
+                      <li><input type="hidden" value="<%= Invoices._id %>" name="_id" /></li>
+                      <li><input type="hidden" value="<%= currentUser %>" name="currentUser" /></li>
+                      <li><input type="hidden" value="<%= isadmin %>" name="isadmin" /></li>
+                    </ul>
+                    <ul class="creat_top_From">
+                      <li>
+                        <div class="form-group">
+                          <label class="control-label " for="start">Name<span style=" color: red">*</span></label>
+                          <div class="">
+                            <input type="text" id="name" class="CreateForm" name="name" placeholder="Enter Name"
+                              style="width: 100%;" value="<%= Invoices.name %>" required>
+                          </div>
+                          <div class="error" id="nameErr">
+                          </div>
                         </div>
-                        <div class="error" id="nameErr">
+                      </li>
+                      <li>
+                        <div class="form-group">
+                          <label for="start">Mobile:</label>
+                          <div class="">
+                            <input type="number" id="mobile" name="mobile" maxlength="10"
+                              placeholder="Enter Mobile No(Optional)" style="width: 100%;"
+                              value="<%= Invoices.mobile %>">
+                          </div>
+                          <div class="error" id="nameErr">
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                    <li><input type="hidden" value="<%= Invoices._id %>" name="_id" /></li>
-                    <li><input type="hidden" value="<%= currentUser %>" name="currentUser" /></li>
-                    <li><input type="hidden" value="<%= isadmin %>" name="isadmin" /></li>
-                    <li>
-                      <div class="form-group">
-                        <label for="start">Mobile:</label>
-                        <div class="">
-                          <input type="number" class="slector_list" id="mobile" name="mobile"
-                            placeholder="Enter Mobile No(Optional)"
-                            style="border: none;border-bottom: 1px solid lightgray;" value="<%= Invoices.mobile %>">
+                      </li>
+                      <li>
+                        <div class="form-group">
+                          <label class="control-label " for="start">Address:</label>
+                          <textarea class="CreateForm" name="address" id="address" placeholder="Enter Address(Optional)"
+                            style="width: 100%;"> <%= Invoices.address %>
+                          </textarea>
                         </div>
-                        <div class="error" id="nameErr">
+                      </li>
+                      <li>
+                        <div class="form-group">
+                          <label class="control-label " for="start">Issue Date<span style=" color: red">*</span></label>
+                          <div class="i i-date-range">
+                            <input type="text" id="issuedate" name="issuedate" class="CreateForm" style="width: 100%;"
+                              value="<%= Invoices.issuedate %>" required>
+                          </div>
+                          <div class="error" id="issuedateErr"></div>
                         </div>
-                      </div>
-                    </li>
-                    <li class="row col-md-12" style="width: 60%;">
-                      <div class="form-group">
-                        <label class="control-label " for="start">Address:</label>
-                        <textarea class="slector_list" type="text" name="address" id="address"
-                          placeholder="<%= Invoices.address %>" rows="1"
-                          style="width: 80%; border: none;border-bottom: 1px solid lightgray;"></textarea>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-group">
-                        <label class="control-label " for="start">Issue Date<span style=" color: red">*</span></label>
-                        <div class="i i-date-range">
-                          <input type="date" value="" onkeypress="return false;" id="issuedate" name="issuedate"
-                            class="slector_list" style="border: none;border-bottom: 1px solid lightgray; width: 52%;"
-                            value="<%= Invoices.issuedate %>">
+                      </li>
+                      <li>
+                        <a data-toggle="tooltip" data-placement="right"
+                          title=" due date should be greater than issuedate">
+                          <div class="form-group">
+                            <label class="control-label " for="start">Due Date<span style=" color: red">*</span></label>
+                            <div class="">
+                              <input type="text" id="duedate" onkeypress="return false;" name="duedate"
+                                class="CreateForm" style="width: 100%;" value="<%= Invoices.duedate %>" required>
+                            </div>
+                            <div class="error" id="duedateErr"></div>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <div class="form-group">
+                          <label for="start">Select Currency:</label>
+                          <div class="">
+                            <select name="currency" id="ddlViewBy" class="CreateForm" style="width: 100%;"
+                              onchange="onChange(this);" value="<%= Invoices.currency %>">
+                              <option value="USD" id="usd">United States Dollars &#36; </option>
+                              <option value="INR" id="inr" selected>Indian Rupees &#8377; </option>
+                            </select>
+                          </div>
                         </div>
-                        <div class="error" id="issuedateErr"></div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-group">
-                        <label class="control-label " for="start">Due Date<span style=" color: red">*</span></label>
-                        <div class="">
-                          <input type="date" id="duedate" onkeypress="return false;" name="duedate" class="slector_list"
-                            style="border: none;border-bottom: 1px solid lightgray;width: 50%;"
-                            value="<%= Invoices.duedate %>">
+                      </li>
+                      <li>
+                        <div class="form-group">
+                          <label for="start">GST Number:</label>
+                          <div class="">
+                            <input class="CreateForm" type="text" id="gstnumber" name="gstnumber" placeholder="Optional"
+                              style="width: 100%;" value="<%= Invoices.gstnumber %>">
+                          </div>
                         </div>
-                        <div class="error" id="duedateErr"></div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-group">
-                        <label for="start">Select Currency:</label>
-                        <div class="">
-                          <select name="currency" id="ddlViewBy" class="slector_list"
-                            style="border: none;border-bottom: 1px solid lightgray; background-color: white; width: 52%;"
-                            onchange="onChange(this);" value="<%= Invoices.currency %>">
-                            <option value="USD" id="usd">United States Dollars &#36; </option>
-                            <option value="INR" id="inr" selected>Indian Rupees &#8377; </option>
-                          </select>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-group">
-                        <label for="start">GST Number:</label>
-                        <div class="">
-                          <input class="slector_list" type="text" id="gstnumber" name="gstnumber" placeholder="Optional"
-                            style="border: none;border-bottom: 1px solid lightgray;" value="<%= Invoices.gstnumber %>">
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                  <div id="second_form">
-                    <div id="nvoice-qty-pric-0" class="nvoice-qty-pric">
+                      </li>
+                    </ul>
+                    <div id="second_form">
                       <% Invoices.entries.forEach((invoice,i)=>{ %>
+                      <div id="nvoice-qty-pric-<%= i %>" class="nvoice-qty-pric">
+                        <ul>
+                          <li>
+                            <div class="form_group">
+                              <label style="font-size: 13px;font-weight: 600;">Description</label>
+                              <input type="text" class="slector_list" name="description" type="text" id="description"
+                                value="<%= invoice.description %>"
+                                style=" border: none; border-bottom: 1px solid #ddd;padding: 0;">
+                            </div>
+                          </li>
+                          <li>
+                            <div class="form_group">
+                              <label style="font-size: 13px;font-weight: 600;">Quantity <span
+                                  style=" color: red">*</span></label>
+                              <input type="number" id="quantity" class="quantity" name="quantity"
+                                value="<%= invoice.quantity %>" required
+                                style=" border: none; border-bottom: 1px solid #d9d9d9;padding: 0;">
+                            </div>
+                          </li>
+                          <li>
+                            <div class="form_group">
+                              <label style="font-size: 13px;font-weight: 600;">Price <span
+                                  style=" color: red">*</span></label>
+                              <input type="number" id="price" name="price" class="price" value="<%= invoice.price %>"
+                                required style="border: none; border-bottom: 1px solid #ddd;padding: 0;">
+                            </div>
+                          </li>
+                          <li>
+                            <div class="form_group">
+                              <label style="font-size: 13px;font-weight: 600;">Subtotal </label>
+                              <input type="number" name="subtotal" class="subtotal" value="<%= invoice.subtotal %>"
+                                style="border: none; border-bottom: 1px solid #ddd;padding: 0;" readonly>
+                            </div>
+                          </li>
+                        </ul>
+                        <button type="button" class="closeRandSect"
+                          style="float: right; margin-left: 6px; display:none; background: #5e72e4; color:#fff ;border: none; padding: 4px 10px; margin-top: 9px; float: right;">-</button>
+                      </div>
+                      <%})%>
+                    </div>
+                    <button type="button" id="addbtn" class="mb4"
+                      style="float: right; background: #5e72e4;color: #fff;border: none;padding: 4px 10px;margin-top: 9px; float: right;">+</button>
+                    <div>
                       <ul>
-                        <li class=" col-md-12" style="width: 57%;">
-                          <div class="form-group3">
-                            <label class="control-label " for="start" style=" margin-left: -15px;">Description:</label>
-                            <div class="">
-                              <textarea class="slector_list" name="description[]" type="text" id="description"
-                                placeholder="<%= invoice.description %>"
-                                style="border: none;border-bottom: 1px solid lightgray; margin-left: -6px;"></textarea>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="form-group1">
-                            <label class="control-label " for="start">Quantity<span style=" color: red">*</span></label>
-                            <div class="">
-                              <input type="number" id="quantity" class="quantity" name="quantity[]"
-                                placeholder="Enter Quantity" style="border: none;border-bottom: 1px solid lightgray;"
-                                value="<%= invoice.quantity %>">
-                            </div>
-                            <div class="error" id="quantityErr"></div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="form-group2">
-                            <label class="control-label " for="start">Price<span style=" color: red">*</span></label>
-                            <div class="">
-                              <input type="number" id="price" name="price[]" class="price" placeholder="Enter Price"
-                                style="border: none;border-bottom: 1px solid lightgray;" value="<%= invoice.price %>">
-                            </div>
-                            <div class="error" id="priceErr"></div>
-                          </div>
-                        </li>
                         <li>
                           <div>
-                            <label class="control-label " for="start">Sub Total</label>
+                            <label class="control-label " for="start">GST Total</label>
                             <div class="">
-                              <input type="number" name="subtotal" class="subtotal"
-                                style="border: none;border-bottom: 1px solid lightgray;" value="<%= invoice.subtotal %>"
-                                readonly>
+                              <input type="number" name="gst" class="gsttotal" value="<%= Invoices.gst %>"
+                                style="border: none;border-bottom: 1px solid #ddd;" readonly>
                             </div>
+                          </div>
+                        </li>
+                        <li>
+                          <span>
+                            <b>
+                              Total Amount</b>
+                          </span>
+                          <div class="">
+                            <input type="number" name="totalamount" class="totalamount"
+                              style="border: none;border-bottom: 1px solid #ddd;" value="<%= Invoices.totalamount %>"
+                              readonly>
                           </div>
                         </li>
                       </ul>
-                      <%})%>
-                      <button type="button" class="closeRandSect"
-                        style="float: right; margin-left: 6px; display:none; background: #5e72e4; color:#fff ;border: none; padding: 4px 10px; margin-top: -18px; margin-right: 150px;">-</button>
                     </div>
                   </div>
-                  <button type="button" id="addbtn" class="mb4"
-                    style="float: right; background: #5e72e4;color: #fff;border: none;padding: 4px 10px;margin-top: -18px; margin-right: 150px;">+</button>
-                  <ul>
-                    <li>
-                      <span>
-                        <b>
-                          Total Amount</b>
-                      </span>
-                      <div class="">
-                        <input type="number" name="totalamount" class="totalamount"
-                          style="border: none;border-bottom: 1px solid lightgray;" value="<%= Invoices.totalamount %>"
-                          readonly>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-md-4 col-sm-4 invoices--side"
-                  style="margin-top: 100px; height: 100%; text-align: center;padding-top: 13px;">
-                  <div class="btn-group-vertical" style=" border: 1px solid lightgray;margin-bottom: 10px;">
-                    <div>
-                      <button class="btn btn-default btn-block btn-lg" name="final" value="final"
-                        style="background-color: white;font-size: 16px;padding: 9px 111px; color: black; border: none; box-shadow: none;">
-                        Finalize
-                      </button>
-                    </div>
-                  </div>
-                  <div class="btn-group-vertical" style="border: 1px solid lightgray;">
-                    <div>
-                      <button type="submit" id="submit" name="submitValue" value="<%= Invoices.status %>"
-                        class="btn btn-default btn-block btn-lg"
-                        style="background-color: white;font-size: 16px;padding: 9px 87px; color: black; border: none;border-bottom: 1px solid lightgray;box-shadow: none;">
-                        Save Invoice<i class="fa fa-save">
-                        </i>
-                      </button>
-                    </div>
-                    <div>
-                      <a href="/invoice/delete/<%= Invoices._id %>">
-                        <button type="button" class="btn btn-default btn-block btn-lg" id="delete" value="delete"
-                          style="background-color: white;color: black; padding: 9px 123px;font-size: 16px;border: none;box-shadow: none;"
-                          onclick="myFunction()">
-                          Delete <i class="i i-close">
-
-                          </i>
+                  <div class="create_invoice_right invoices--side">
+                    <div class="btn-group-vertical">
+                      <div style="width:100%;">
+                        <button class="btn btn-default btn-block btn-lg" name="final" value="final"
+                          style="background-color: #5e72e4;font-size: 16px;padding: 9px 10px;border:solid 1px #ddd; color: black;box-shadow: none;">
+                          Finalize
                         </button>
-                      </a>
+                      </div>
+                      <div class="create_invoice_right_button" style="width:100%;margin: 2rem 0;">
+                          <button type="submit" id="submit" name="submitValue" value="<%= Invoices.status %>" class="btn btn-default btn-block btn-lg"
+                            style="background-color: #5e72e4;font-size: 16px;padding: 9px 87px; color: black;border:solid 1px #ddd;box-shadow: none;">
+                            Save Invoice <i class="fa fa-save" style="margin-left:10px;">
+                            </i>
+                          </button>
+                        </div>
+                      <div style="width:100%;">
+                        <a href="/invoice/delete/<%= Invoices._id %>" onclick="alert('Are you sure ?');">
+                          <button type="button" class="btn btn-default btn-block btn-lg"
+                            style="background-color: #5e72e4;color: black; padding: 9px 123px;font-size: 16px;border:solid 1px #ddd;box-shadow: none;"
+                            onclick="myFunction()">Delete
+                          </button>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -501,49 +607,70 @@
     $(document).ready(function () {
       var total = [];
       var subtotal = 0;
-
       $(document).on('change', '.quantity,.price', function () {
         $(".quantity").each(function (i, v) {
           $(".price")[i].value
           var q1 = $(this).val();
+
           subtotal = q1 * $(".price")[i].value
         });
-        let currencysign = ''
-        console.log(strUser)
-        currencysign = strUser == 'INR' ? '₹' : '$'
-        gstTotal = 0
         pttal = 0
-        if (strUser == 'INR') {
-          gstTotal += 0.18 * subtotal
-          pttal += 0.18 * subtotal + subtotal
-        }
-        else {
-          if (strUser == 'USD')
-            pttal += subtotal
-        }
-
-        console.log(pttal);
-        $(this).closest('.nvoice-qty-pric').find('.subtotal').val(pttal.toFixed(2));
-
-        $('.subtotal').each(function () {
-          if ($(this).val() !== "0") {
-            total.push($(this).val());
-          }
+        pttal += subtotal
+        $(this).closest('.nvoice-qty-pric').find('.subtotal').val(pttal);
+        $('.subtotal').each(function (index) {
+          total[index] = $(this).val();
         });
+
+        let currencysign = ''
+        currencysign = strUser == 'INR' ? '₹' : '$'
+
         var totalAmount = 0;
-
+        gstTotal = 0
         if (total.length) {
-          var unique = total.filter(function (itm, i, total) {
-            return i == total.indexOf(itm);
-          });
-
-          for (var i = 0; i < unique.length; i++) {
-            totalAmount += unique[i] << 0;
+          for (var i = 0; i < total.length; i++) {
+            totalAmount += total[i] << 0;
           }
-          $(".totalamount").val(totalAmount.toFixed(2));
-        }
 
+          if (strUser == 'INR') {
+            gstTotal += 0.18 * totalAmount
+            totalAmount += gstTotal;
+          }
+          else {
+            if (strUser == 'USD')
+              totalAmount = totalAmount
+          }
+          console.log(gstTotal.toFixed(2));
+
+          $('.gsttotal').val(gstTotal.toFixed(2));
+          $(".totalamount").val(totalAmount);
+        }
       });
+
+
+      $(document).on('click', '.closeRandSect', function () {
+        pttal = 0
+        $(".quantity").each(function (i, v) {
+          $(".price")[i].value
+          var q1 = $(this).val();
+          subtotal = q1 * $(".price")[i].value;
+          pttal += subtotal
+        });
+        var totalAmount = pttal;
+        var gstTotal = 0
+        if (pttal) {
+          if (strUser == 'INR') {
+            gstTotal += 0.18 * pttal
+            totalAmount += gstTotal;
+          }
+          else {
+            if (strUser == 'USD')
+              totalAmount = pttal
+          }
+
+          $('.gsttotal').val(gstTotal.toFixed(2));
+          $(".totalamount").val(totalAmount);
+        }
+      })
     });
   </script>
   <script>
@@ -579,6 +706,31 @@
           $(this).find('button').hide()
       })
     })
+  </script>
+  <script src="http://code.jquery.com/jquery-1.9.0.js"></script>
+  <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet"
+    type="text/css" />
+  <script>
+    $(document).ready(function () {
+      $("#issuedate").datepicker({
+        numberOfMonths: 1,
+        onSelect: function (selected) {
+          var dt = new Date(selected);
+          dt.setDate(dt.getDate() - 0);
+          $("#duedate").datepicker("option", "minDate", dt);
+        }
+      });
+      $("#duedate").datepicker({
+        numberOfMonths: 1,
+        onSelect: function (selected) {
+          var dt = new Date(selected);
+          dt.setDate(dt.getDate() - 0);
+          $("#issuedate").datepicker("option", "maxDate", dt);
+        }
+      });
+    });
   </script>
 
 </body>
