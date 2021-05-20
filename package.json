@@ -20,7 +20,7 @@
     "express-session": "^1.16.2",
     "express-sessions": "^1.0.6",
     "file-system": "^2.2.2",
-    "html-pdf": "^2.2.0",
+    "html-pdf": "^3.0.1",
     "invoice-number": "^1.0.6",
     "lightpick": "^1.4.1",
     "moment": "^2.24.0",
